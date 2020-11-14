@@ -15,10 +15,14 @@ const app = new Vue({
                 headers: {
                     'Content-Type': 'text/plain;charset=UTF-8'
                 },
-                body: this.scss
+                body: {
+                    scss: this.scss,
+                }
             });
 
-            console.log(response);
+            let result = await response.text();
+
+            console.log(result);
         },
     }
 });
