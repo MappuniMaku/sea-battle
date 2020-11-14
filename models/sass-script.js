@@ -9,7 +9,15 @@ class ScssScript {
         return await new Promise((resolve, reject) => {
             sass.render({
                 file: this.file,
-            }, (err, result) => resolve(result));
+            }, (error, result) => {
+                if (error) {
+                    console.log(error.message);
+                }
+                else {
+                    console.log(result.css.toString());
+                    resolve(result.css);
+                }
+            });
         });
     }
 }
