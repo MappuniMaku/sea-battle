@@ -1,7 +1,17 @@
 const { Router } = require('express');
 const Todo = require('../models/todos');
 const router = Router();
-const client = require('../index');
+const { Client } = require('pg');
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        require: true,
+        rejectUnauthorized: false
+    }
+});
+
+client.connect();
 
 router.get('/', async (req, res) => {
     let products = 'До обращения к базе';
