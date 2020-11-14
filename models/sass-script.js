@@ -6,6 +6,8 @@ class ScssScript {
     }
 
     async compileToCss() {
+        console.log('Компиляция началась...');
+        
         return await new Promise((resolve, reject) => {
             sass.render({
                 file: this.file,
