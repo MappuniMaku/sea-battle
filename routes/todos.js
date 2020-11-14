@@ -59,7 +59,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    const path = '/styles.scss';
+    const path = 'styles.scss';
 
     fs.writeFile(path, req.body, () => {
         throw new Error('Ошибка при записи данных в файл');
