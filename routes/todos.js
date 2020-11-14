@@ -3,6 +3,7 @@ const ScssScript = require('../models/sass-script');
 const router = Router();
 const { Client } = require('pg');
 const fs = require('fs');
+const sass = require('node-sass');
 
 router.get('/', async (req, res) => {
     const products = 'До обращения к базе';
@@ -72,6 +73,8 @@ router.post('/compile_scss', async (req, res) => {
             console.log('Файл был успешно записан');
         });
     })
+
+    console.log('Следующий шаг');
 
     let compiledScss = await new Promise((resolve, reject) => {
         const result = new ScssScript(path).compileToCss();
