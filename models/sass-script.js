@@ -24,6 +24,18 @@ class ScssScript {
             });
         });
     }
+
+    async compileString() {
+        console.log('Компиляция 2 началась...');
+
+        return await new Promise((resolve, reject) => {
+            const result = sass.renderSync({
+                data: '.Header__title{color: red;}',
+            });
+
+            resolve(result.css);
+        });
+    }
 }
 
 module.exports = ScssScript;

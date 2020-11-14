@@ -59,7 +59,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    const path = 'public/styles.scss';
+    const path = 'public/scss-styles.scss';
 
     await new Promise((resolve, reject) => {
         fs.opendir('public', (err) => {
@@ -77,8 +77,13 @@ router.post('/compile_scss', async (req, res) => {
 
     console.log('Следующий шаг');
 
+    // let compiledScss = await new Promise((resolve, reject) => {
+    //     const result = new ScssScript(path).compileToCss();
+    //     resolve(result);
+    // })
+
     let compiledScss = await new Promise((resolve, reject) => {
-        const result = new ScssScript(path).compileToCss();
+        const result = new ScssScript(path).compileString();
         resolve(result);
     })
 
