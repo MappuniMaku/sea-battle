@@ -1,11 +1,24 @@
 const { Router } = require('express');
 const Todo = require('../models/todos');
 const router = Router();
+const client = require('../index');
 
 router.get('/', async (req, res) => {
+    let products = 'До обращения к базе';
+
+    client.query('SELECT * FROM products;', (err, res) => {
+        if (err) throw err;
+        for (let row of res.rows) {
+            console.log(JSON.stringify(row));
+        }
+        products = res;
+        client.end();
+    });
+
     res.render('index', {
         title: 'Todos list',
         isIndex: true,
+        products,
     });
 });
 

@@ -35,3 +35,4 @@ app.listen(PORT, () => {
     console.log('Server start');
 });
 
+module.exports = client;
