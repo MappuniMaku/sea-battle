@@ -3,7 +3,6 @@ const ScssScript = require('../models/sass-script');
 const router = Router();
 const { Client } = require('pg');
 const fs = require('fs');
-const sass = require('node-sass');
 
 router.get('/', async (req, res) => {
     const products = 'До обращения к базе';
@@ -62,7 +61,7 @@ router.get('/create', (req, res) => {
 router.post('/compile_scss', async (req, res) => {
     const path = 'public/scss-styles.scss';
 
-    await new Promise(() => {
+    await new Promise((resolve, reject) => {
         fs.opendir('public', (err) => {
             if (err) throw err;
             console.log('Папка успешно открыта');
@@ -72,6 +71,8 @@ router.post('/compile_scss', async (req, res) => {
             if (err) throw err;
             console.log('Файл был успешно записан');
         });
+
+        resolve();
     })
 
     console.log('Следующий шаг');
