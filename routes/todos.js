@@ -28,18 +28,20 @@ router.post('/query', async (req, res) => {
         client.connect();
 
         client.query('SELECT * FROM products;', (error, response) => {
-            if (error) reject(error);
-            let myres = '';
-            for (let row of response.rows) {
-                console.log(JSON.stringify(row));
-                myres += JSON.stringify(row);
-            }
+            if (error) throw error;
+            
+            let result = response.rows.map((row) => {
+                console.log(row.name);
+                return row.name;
+            }).join(', ');
+
             client.end();
-            resolve(myres);
+
+            resolve(result);
         });
     });
 
-    console.log(products);
+    console.log(res);
 
     res.render('index', {
         title: 'Todos list',
