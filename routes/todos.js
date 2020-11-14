@@ -61,8 +61,9 @@ router.get('/create', (req, res) => {
 router.post('/compile_scss', async (req, res) => {
     const path = '/styles.scss';
 
-    fs.writeFile(path, req.body, () => {
-        throw new Error('Ошибка при записи данных в файл');
+    fs.writeFile(path, req.body, (err) => {
+        if (err) throw err;
+        console.log('Файл был успешно записан');
     });
 
     const compiledScss = new ScssScript(path).compileToCss();
