@@ -61,7 +61,7 @@ router.get('/create', (req, res) => {
 router.post('/compile_scss', async (req, res) => {
     const path = 'styles.scss';
 
-    fs.writeFile(path, res.body.scss);
+    fs.writeFile(path, req.body);
 
     const compiledScss = new ScssScript(path).compileToCss();
 
