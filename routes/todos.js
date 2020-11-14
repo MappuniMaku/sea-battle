@@ -27,15 +27,17 @@ router.post('/query', async (req, res) => {
 
         client.connect();
 
-        client.query('SELECT * FROM products;', (err, res) => {
-            if (err) throw err;
-            for (let row of res.rows) {
+        client.query('SELECT * FROM products;', (error, response) => {
+            if (error) throw error;
+            for (let row of response.rows) {
                 console.log(JSON.stringify(row));
                 products += `${JSON.stringify(row)}`;
             }
             client.end();
         });
     })();
+
+    console.log(products);
 
     res.render('index', {
         title: 'Todos list',
