@@ -10,7 +10,7 @@ const app = new Vue({
         async compileScss(e) {
             e.preventDefault();
 
-            let response = await fetch('/article/fetch/post/user', {
+            let response = await fetch('/compile_scss', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/plain;charset=UTF-8'
