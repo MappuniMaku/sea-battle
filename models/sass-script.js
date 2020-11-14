@@ -12,9 +12,11 @@ class ScssScript {
             }, (error, result) => {
                 if (error) {
                     console.log(error.message);
+                    console.log(1)
                 }
                 else {
                     console.log(result.css.toString());
+                    console.log(2)
                     resolve(result.css);
                 }
             });
