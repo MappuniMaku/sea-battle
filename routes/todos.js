@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.post('/query', async (req, res) => {
     let products = 'Полученные данные: ';
 
-    await (function() {
+    products = await new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
             ssl: {
@@ -27,15 +27,17 @@ router.post('/query', async (req, res) => {
 
         client.connect();
 
-        console.log(client.query('SELECT * FROM products;', (error, response) => {
-            if (error) throw error;
+        client.query('SELECT * FROM products;', (error, response) => {
+            if (error) reject(error);
+            let myres = '';
             for (let row of response.rows) {
                 console.log(JSON.stringify(row));
-                products += `${JSON.stringify(row)}`;
+                myres += ${JSON.stringify(row)};
             }
             client.end();
-        }));
-    })();
+            resolve(myres);
+        });
+    });
 
     console.log(products);
 
