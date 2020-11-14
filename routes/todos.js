@@ -63,7 +63,7 @@ router.post('/compile_scss', async (req, res) => {
 
     console.log(req.body)
 
-    fs.writeFile(path, req.body, () => {
+    fs.writeFile(path, req.body.scss, () => {
         throw new Error('Ошибка при записи данных в файл');
     });
 

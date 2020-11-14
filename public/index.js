@@ -12,9 +12,9 @@ const app = new Vue({
 
             let response = await fetch('/compile_scss', {
                 method: 'POST',
-                headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
                 mode: 'cors',
-                body: this.scss,
+                body: JSON.stringify({scss: this.scss})
             });
 
             let result = await response.text();
