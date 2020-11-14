@@ -32,7 +32,7 @@ router.post('/query', async (req, res) => {
             let myres = '';
             for (let row of response.rows) {
                 console.log(JSON.stringify(row));
-                myres += ${JSON.stringify(row)};
+                myres += JSON.stringify(row);
             }
             client.end();
             resolve(myres);
