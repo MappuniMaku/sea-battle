@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
             console.log(JSON.stringify(row));
             products += `${JSON.stringify(row)}`;
         }
-        products = res;
         client.end();
     });
 
