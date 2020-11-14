@@ -2,6 +2,7 @@ const { Router } = require('express');
 const ScssScript = require('../models/sass-script');
 const router = Router();
 const { Client } = require('pg');
+const fs = require('fs');
 
 router.get('/', async (req, res) => {
     const products = 'До обращения к базе';
@@ -58,7 +59,12 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    const compiledScss = new ScssScript(req.body.scss).compileToCss();
+    const path = 'styles.scss';
+
+    fs.writeFile(path, res.body.scss);
+
+    const compiledScss = new ScssScript(path).compileToCss();
+
     console.log(compiledScss);
     res.send(compiledScss);
 });
