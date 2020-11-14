@@ -10,3 +10,10 @@
 // })
 
 console.log('ddsass')
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue!'
+    }
+})

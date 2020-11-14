@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.get('/create', (req, res) => {
     res.render('create', {
-        // title: 'Create todo',
+        title: 'Create todo',
         isCreate: true,
     });
 });

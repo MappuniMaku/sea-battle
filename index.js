@@ -2,6 +2,17 @@ const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const todoRoutes = require('./routes/todos');
+const { Client } = require('pg');
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        require: true,
+        rejectUnauthorized: false
+    }
+});
+
+client.connect();
 
 const PORT = process.env.PORT || 3000;
 
