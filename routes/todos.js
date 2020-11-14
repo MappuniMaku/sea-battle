@@ -73,7 +73,10 @@ router.post('/compile_scss', async (req, res) => {
         });
     })
 
-    const compiledScss = new ScssScript(path).compileToCss();
+    let compiledScss = await new Promise((resolve, reject) => {
+        const result = new ScssScript(path).compileToCss();
+        resolve(result);
+    })
 
     console.log(compiledScss);
     res.send(compiledScss);
