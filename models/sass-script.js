@@ -6,15 +6,15 @@ class ScssScript {
     }
 
     async compileString() {
-        console.log('Компиляция 2 началась...');
-        console.log(this.scss);
-
         return await new Promise((resolve, reject) => {
             const result = sass.renderSync({
                 data: this.scss,
             });
 
             resolve(result.css);
+            reject(() => {
+                console.log('В стилях допущена ошибка');
+            })
         });
     }
 }
