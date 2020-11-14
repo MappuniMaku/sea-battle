@@ -1,9 +1,8 @@
 <form action="/compile_scss" method="POST" @submit="compileScss">
     <h2>Компилятор SCSS</h2>
 
-    <div class="input-field">
-        <input type="text" name="code" v-model="scss">
-        <label>SCSS код</label>
+    <div>
+        <textarea type="text" v-model="scss" placeholder="SCSS код"></textarea>
     </div>
 
     <button type="submit" class="btn">Скомпилировать в CSS</button>
