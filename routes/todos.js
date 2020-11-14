@@ -16,7 +16,7 @@ client.connect();
 router.get('/', async (req, res) => {
     let products = 'До обращения к базе';
 
-    client.query('SELECT * FROM products;', (err, res) => {
+    await client.query('SELECT * FROM products;', (err, res) => {
         if (err) throw err;
         for (let row of res.rows) {
             console.log(JSON.stringify(row));
