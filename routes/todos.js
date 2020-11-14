@@ -27,14 +27,14 @@ router.post('/query', async (req, res) => {
 
         client.connect();
 
-        client.query('SELECT * FROM products;', (error, response) => {
+        console.log(client.query('SELECT * FROM products;', (error, response) => {
             if (error) throw error;
             for (let row of response.rows) {
                 console.log(JSON.stringify(row));
                 products += `${JSON.stringify(row)}`;
             }
             client.end();
-        });
+        }));
     })();
 
     console.log(products);
