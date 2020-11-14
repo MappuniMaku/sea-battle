@@ -1,28 +1,8 @@
 const sass = require('node-sass');
 
 class ScssScript {
-    constructor(file) {
-        this.file = file;
-    }
-
-    async compileToCss() {
-        console.log('Компиляция началась...');
-        
-        return await new Promise((resolve, reject) => {
-            sass.render({
-                file: this.file,
-            }, (error, result) => {
-                if (error) {
-                    console.log(error.message);
-                    console.log(1)
-                }
-                else {
-                    console.log(result.css.toString());
-                    console.log(2)
-                    resolve(result.css);
-                }
-            });
-        });
+    constructor(scss) {
+        this.scss = scss;
     }
 
     async compileString() {
@@ -30,7 +10,7 @@ class ScssScript {
 
         return await new Promise((resolve, reject) => {
             const result = sass.renderSync({
-                data: '.Header__title{color: red;}',
+                data: this.scss,
             });
 
             resolve(result.css);
