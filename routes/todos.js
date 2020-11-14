@@ -58,10 +58,10 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    console.log(res.body);
+    console.log(req.body);
 
     let compiledScss = await new Promise((resolve, reject) => {
-        const result = new ScssScript(res.body).compileString();
+        const result = new ScssScript(req.body).compileString();
 
         resolve(result);
     })
