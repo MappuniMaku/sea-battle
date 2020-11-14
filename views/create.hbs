@@ -1,12 +1,10 @@
-<form action="/create" method="POST">
-    <h2>Create todo</h2>
+<form action="/compile_scss" method="POST" @submit="compileScss">
+    <h2>Компилятор SCSS</h2>
 
     <div class="input-field">
-        <input type="text" name="title">
-        <label>Todo title</label>
+        <input type="text" name="scss">
+        <label>SCSS код</label>
     </div>
 
-    <button type="submit" class="btn">Create</button>
+    <button type="submit" class="btn">Скомпилировать в CSS</button>
 </form>
-
-<button type="button" class="btn" id="button">Скомпилить</button>

@@ -1,19 +1,23 @@
-// import sass from 'node-sass';
-//
-// const button = document.querySelector('#button');
-// button.addEventListener('click', () => {
-//     const renderedSass = sass.renderSync({
-//         data: '.Article{color:red;}'
-//     });
-//
-//     console.log(renderedSass);
-// })
+console.log('JavaScript included')
 
-console.log('ddsass')
-
-var app = new Vue({
+const app = new Vue({
     el: '#app',
     data: {
         message: 'Hello Vue!'
+    },
+    methods: {
+        async compileScss(e) {
+            e.preventDefault();
+
+            let response = await fetch('/article/fetch/post/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=UTF-8'
+                },
+                body: e.target.scss
+            });
+
+            console.log(response);
+        },
     }
-})
+});
