@@ -61,10 +61,12 @@ router.get('/create', (req, res) => {
 router.post('/compile_scss', async (req, res) => {
     const path = '/styles/styles.scss';
 
-    fs.opendir('/public', (err) => {
+    fs.opendir('public', (err) => {
         if (err) throw err;
         console.log('Папка успешно открыта');
-    }).writeFile('styles.scss', req.body, (err) => {
+    });
+    
+    fs.writeFile('styles.scss', req.body, (err) => {
         if (err) throw err;
         console.log('Файл был успешно записан');
     });
