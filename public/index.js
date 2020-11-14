@@ -14,7 +14,7 @@ const app = new Vue({
                 method: 'POST',
                 headers: {'Content-Type': 'application/json;charset=utf-8'},
                 mode: 'cors',
-                body: JSON.stringify({scss: this.scss})
+                body: JSON.stringify(`scss: ${this.scss}`)
             });
 
             let result = await response.text();
