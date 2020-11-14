@@ -59,7 +59,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    const path = '/public/styles.scss';
+    const path = '/public/scss-styles.scss';
 
     await new Promise(() => {
         fs.opendir('public', (err) => {
