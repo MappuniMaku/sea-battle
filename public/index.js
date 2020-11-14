@@ -3,7 +3,8 @@ console.log('JavaScript included')
 const app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!'
+        message: 'Hello Vue!',
+        scss: '',
     },
     methods: {
         async compileScss(e) {
@@ -14,7 +15,7 @@ const app = new Vue({
                 headers: {
                     'Content-Type': 'text/plain;charset=UTF-8'
                 },
-                body: e.target.scss
+                body: this.scss
             });
 
             console.log(response);
