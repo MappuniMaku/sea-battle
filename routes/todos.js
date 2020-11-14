@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
         if (err) throw err;
         for (let row of res.rows) {
             console.log(JSON.stringify(row));
+            products += `${JSON.stringify(row)}`;
         }
         products = res;
         client.end();
