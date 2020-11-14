@@ -3,27 +3,39 @@ const Todo = require('../models/todos');
 const router = Router();
 const { Client } = require('pg');
 
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        require: true,
-        rejectUnauthorized: false
-    }
+router.get('/', async (req, res) => {
+    const products = 'До обращения к базе';
+
+    res.render('index', {
+        title: 'Todos list',
+        isIndex: true,
+        products,
+    });
 });
 
-client.connect();
+router.post('/query', async (req, res) => {
+    let products = 'Полученные данные: ';
 
-router.get('/', async (req, res) => {
-    let products = 'До обращения к базе';
+    await (function() {
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        });
 
-    await client.query('SELECT * FROM products;', (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-            console.log(JSON.stringify(row));
-            products += `${JSON.stringify(row)}`;
-        }
-        client.end();
-    });
+        client.connect();
+
+        client.query('SELECT * FROM products;', (err, res) => {
+            if (err) throw err;
+            for (let row of res.rows) {
+                console.log(JSON.stringify(row));
+                products += `${JSON.stringify(row)}`;
+            }
+            client.end();
+        });
+    })();
 
     res.render('index', {
         title: 'Todos list',
