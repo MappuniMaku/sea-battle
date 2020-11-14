@@ -1,26 +1,26 @@
 const express = require('express');
+const path = require('path');
+const exphbs = require('express-handlebars');
+const todoRoutes = require('./routes/todos');
+
+const PORT = process.env.PORT || 3000;
+
 const app = express();
-
-const PORT = process.env.PORT || 80;
-
-app.get('/', (req, res) => {
-    res.end(`
-        <div>
-            <a href="/about">About</a>
-            <h1>Home page</h1>
-        </div>
-    `);
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    extname: 'hbs',
 });
 
-app.get('/about', (req, res) => {
-    res.end(`
-        <div>
-            <a href="/">Home</a>
-            <h1>About page</h1>
-        </div>
-    `);
-});
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', 'views');
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(todoRoutes);
 
 app.listen(PORT, () => {
-    console.log('Server started');
+    console.log('Server start');
 });
+
