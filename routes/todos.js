@@ -63,10 +63,19 @@ router.post('/compile_scss', async (req, res) => {
     let compiledScss = await new Promise((resolve, reject) => {
         const result = new ScssScript(req.body).compileString();
 
-        resolve(result);
-    })
+        if (result) {
+            resolve(result);
+        } else {
+            reject(new Error('Введенные данные не могут быть скомпилированы'));
+        }
+    });
 
-    res.send(compiledScss);
+    compiledScss.then((result) => {
+        res.send(result);
+    }).catch((error) => {
+        console.log(error);
+        res.send(error);
+    });
 });
 
 router.post('/complete', async (req, res) => {
