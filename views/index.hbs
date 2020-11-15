@@ -19,11 +19,11 @@
     <p>Здесь ничего не происходит</p>
 {{/if}}
 
-<div>{{products}}</div>
-
 <div v-html="message"></div>
 <button class="btn btn-small" type="button" v-html="buttonText" @click="changeText"></button>
 
+<div>{{products}}</div>
+
 <form action="/query" method="POST">
-    <button type="submit" class="btn">Получить данные из базы</button>
+    <button type="submit" class="btn">Получить данные по продуктам</button>
 </form>

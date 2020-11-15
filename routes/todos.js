@@ -4,10 +4,10 @@ const router = Router();
 const { Client } = require('pg');
 
 router.get('/', async (req, res) => {
-    const products = 'До обращения к базе';
+    const products = 'Обращений к базе еще не производилось';
 
     res.render('index', {
-        title: 'Todos list',
+        title: 'Мой говносервер',
         isIndex: true,
         products,
     });
