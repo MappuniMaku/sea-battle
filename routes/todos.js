@@ -14,9 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/db_query/products', async (req, res) => {
-    let products = 'Полученные данные: ';
-
-    products += await new Promise((resolve, reject) => {
+    const products = await new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
             ssl: {
