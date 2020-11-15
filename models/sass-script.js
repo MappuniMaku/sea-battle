@@ -7,19 +7,15 @@ class ScssScript {
 
     async compileString() {
         try {
-            return await new Promise((resolve, reject) => {
+            return await new Promise((resolve) => {
                 const result = sass.renderSync({
                     data: this.scss,
                 });
 
-                if (result.css) {
-                    resolve(result.css);
-                } else {
-                    reject(new Error('В стилях допущена ошибка'));
-                }
+                resolve(result.css);
             });
         } catch (err) {
-            return err;
+            return new Error('В стилях допущена ошибка');
         }
     }
 }

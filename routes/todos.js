@@ -67,12 +67,12 @@ router.post('/compile_scss', async (req, res) => {
             if (result) {
                 resolve(result);
             } else {
-                reject(new Error('Введенные данные не могут быть скомпилированы'));
+                reject(new Error('Произошла серверная ошибка компиляции'));
             }
         });
 
-        res.send(compiledScss);
         console.log('Компиляция завершена');
+        res.send(compiledScss);
     } catch (err) {
         console.log(err);
         res.send(err);

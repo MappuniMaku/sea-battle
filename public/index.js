@@ -10,15 +10,19 @@ const app = new Vue({
         async compileScss(e) {
             e.preventDefault();
 
-            let response = await fetch('/compile_scss', {
-                method: 'POST',
-                mode: 'cors',
-                body: this.scss,
-            });
+            try {
+                let response = await fetch('/compile_scss', {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: this.scss,
+                });
 
-            let result = await response.text();
+                let result = await response.text();
 
-            console.log(result);
+                console.log(result);
+            } catch {
+                throw new Error('Ошибка отправки запроса');
+            }
         },
     }
 });
