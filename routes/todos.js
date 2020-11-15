@@ -58,7 +58,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/compile_scss', async (req, res) => {
-    console.log(req.body);
+    console.log(`Получена строка для компиляции: ${req.body}`);
 
     try {
         let compiledScss = await new Promise((resolve, reject) => {
