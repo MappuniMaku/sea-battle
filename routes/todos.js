@@ -60,23 +60,23 @@ router.get('/create', (req, res) => {
 router.post('/compile_scss', async (req, res) => {
     console.log(req.body);
 
-    let compiledScss = new Promise((resolve, reject) => {
-        const result = new ScssScript(req.body).compileString();
+    try {
+        let compiledScss = await new Promise((resolve, reject) => {
+            const result = new ScssScript(req.body).compileString();
 
-        if (result) {
-            resolve(result);
-        } else {
-            reject(new Error('Введенные данные не могут быть скомпилированы'));
-        }
-    });
+            if (result) {
+                resolve(result);
+            } else {
+                reject(new Error('Введенные данные не могут быть скомпилированы'));
+            }
+        });
 
-    await compiledScss.then((result) => {
-        res.send(result);
+        res.send(compiledScss);
         console.log('Компиляция завершена');
-    }).catch((error) => {
-        console.log(error);
-        res.send(error);
-    });
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
 });
 
 router.post('/complete', async (req, res) => {
