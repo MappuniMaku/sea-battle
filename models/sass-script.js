@@ -6,15 +6,22 @@ class ScssScript {
     }
 
     async compileString() {
-        return await new Promise((resolve, reject) => {
+        let promisedStyles = await new Promise((resolve, reject) => {
             const result = sass.renderSync({
                 data: this.scss,
             });
 
-            resolve(result.css);
-            reject(() => {
-                console.log('В стилях допущена ошибка');
-            })
+            if (result.css) {
+                resolve(result.css);
+            } else {
+                reject(new Error('В стилях допущена ошибка'));
+            }
+        });
+
+        promisedStyles.then((result) => {
+            return result;
+        }).catch((error) => {
+            return error;
         });
     }
 }
