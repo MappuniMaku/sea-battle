@@ -77,6 +77,34 @@ router.post('/db_query/products/remove', async (req, res) => {
    res.redirect('/products');
 });
 
+router.post('/db_query/products/add', async (req, res) => {
+    await new Promise((resolve) => {
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        });
+
+        client.connect();
+
+        client.query(`INSERT INTO products (name, price) VALUES (${req.body.name}, ${req.body.price})`, (error, response) => {
+            try {
+                client.end();
+
+                console.log(`Операция завершена, результат: ${response}`);
+
+                resolve(response);
+            } catch {
+                console.log(error);
+            }
+        });
+    });
+
+    res.redirect('/products');
+});
+
 router.get('/create', (req, res) => {
     res.render('create', {
         title: 'Скомпилировать SCSS',

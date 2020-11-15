@@ -8,10 +8,7 @@
 
                 <form action="/db_query/products/remove" method="POST">
                     <input type="hidden" name="id" value="{{id}}">
-                    <button
-                        type="submit"
-                        class="btn btn-small"
-                    >
+                    <button type="submit" class="btn btn-small">
                         Удалить
                     </button>
                 </form>
@@ -21,3 +18,19 @@
 {{else}}
     <span>В базе нет никаких продуктов</span>
 {{/if}}
+
+<form action="/db_query/products/add" method="POST">
+    <div class="input-field">
+        <input type="text" name="name">
+        <label>Наименование</label>
+    </div>
+
+    <div class="input-field">
+        <input type="number" name="price">
+        <label>Цена</label>
+    </div>
+
+    <button type="submit" class="btn btn-small">
+        Удалить
+    </button>
+</form>
