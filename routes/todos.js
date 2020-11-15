@@ -4,12 +4,9 @@ const router = Router();
 const { Client } = require('pg');
 
 router.get('/', async (req, res) => {
-    const products = 'Обращений к базе еще не производилось';
-
     res.render('index', {
         title: 'Мой говносервер',
         isIndex: true,
-        products,
     });
 });
 

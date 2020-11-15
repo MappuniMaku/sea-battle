@@ -4,8 +4,6 @@
 <div v-html="message"></div>
 <button class="btn btn-small" type="button" v-html="buttonText" @click="changeText"></button>
 
-<div>{{products}}</div>
-
 <form action="/db_query/products" method="POST">
     <button type="submit" class="btn">Получить данные по продуктам</button>
 </form>
