@@ -28,16 +28,18 @@ router.post('/query', async (req, res) => {
         client.connect();
 
         client.query('SELECT * FROM products;', (error, response) => {
-            if (error) throw error;
+            try {
+                let result = response.rows.map((row) => {
+                    console.log(row.name);
+                    return row.name;
+                }).join(', ');
 
-            let result = response.rows.map((row) => {
-                console.log(row.name);
-                return row.name;
-            }).join(', ');
+                client.end();
 
-            client.end();
-
-            resolve(result);
+                resolve(result);
+            } catch {
+                console.log(error);
+            }
         });
     });
 
