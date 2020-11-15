@@ -40,7 +40,10 @@ const app = new Vue({
         },
 
         async getProducts() {
-            await fetch('/db_query/products');
+            await fetch('/db_query/products', {
+                method: 'GET',
+                mode: 'cors',
+            });
         },
 
         async removeProduct(id) {
