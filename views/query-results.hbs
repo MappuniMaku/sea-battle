@@ -4,14 +4,7 @@
     <ul>
         {{#each results}}
             <li class="todo">
-                <form action="/complete" method="POST">
-                    <label>
-                        <input type="checkbox" name="completed">
-                        <span>{{title}}</span>
-
-                        <button class="btn btn-small" type="submit">Save</button>
-                    </label>
-                </form>
+                <span>Позиция: {{id}}, наименование: {{name}}, цена: {{price}}</span>
             </li>
         {{/each}}
     </ul>

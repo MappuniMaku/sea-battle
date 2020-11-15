@@ -31,8 +31,12 @@ router.post('/db_query/products', async (req, res) => {
             try {
                 let result = response.rows.map((row) => {
                     console.log(row);
-                    return row.name;
-                }).join(', ');
+                    return {
+                        id: row.product_no,
+                        name: row.name,
+                        price: row.price,
+                    };
+                });
 
                 client.end();
 
@@ -43,10 +47,9 @@ router.post('/db_query/products', async (req, res) => {
         });
     });
 
-    res.render('index', {
-        title: 'Мой говносервер',
-        isIndex: true,
-        products,
+    res.render('query-results', {
+        title: 'Результаты запроса',
+        results: products,
     });
 });
 
