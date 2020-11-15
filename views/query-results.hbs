@@ -6,13 +6,15 @@
             <li class="ProductsList__item">
                 <span class="ProductsList__itemText">Позиция: {{id}}, наименование: {{name}}, цена: {{price}}</span>
 
-                <button
-                    type="button"
-                    class="btn btn-small"
-                    @click="removeProduct({{id}})"
-                >
-                    Удалить
-                </button>
+                <form action="/db_query/products/remove" method="POST">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button
+                        type="submit"
+                        class="btn btn-small"
+                    >
+                        Удалить
+                    </button>
+                </form>
             </li>
         {{/each}}
     </ul>
