@@ -92,7 +92,7 @@ router.post('/db_query/products/add', async (req, res) => {
         console.log(req.body.name);
         console.log(req.body.price);
 
-        client.query(`INSERT INTO products (name, price) VALUES (${req.body.name}, ${req.body.price})`, (error, response) => {
+        client.query(`INSERT INTO products (name, price) VALUES ('${req.body.name}', ${req.body.price})`, (error, response) => {
             try {
                 client.end();
 
