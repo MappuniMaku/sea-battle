@@ -43,7 +43,7 @@ router.get('/products', async (req, res) => {
     });
 
     res.render('products', {
-        title: 'Результаты запроса',
+        title: 'База данных - продукты',
         isProducts: true,
         results: products,
     });
