@@ -20,14 +20,16 @@
 {{/if}}
 
 <form action="/db_query/products/add" method="POST">
-    <div class="input-field">
-        <input id="name" type="text" name="name">
-        <label for="name">Наименование</label>
-    </div>
+    <div class="row">
+        <div class="input-field col">
+            <input id="name" type="text" name="name">
+            <label for="name">Наименование</label>
+        </div>
 
-    <div class="input-field">
-        <input id="price" type="number" name="price">
-        <label for="price">Цена</label>
+        <div class="input-field col">
+            <input id="price" type="number" name="price">
+            <label for="price">Цена</label>
+        </div>
     </div>
 
     <div class="row">
