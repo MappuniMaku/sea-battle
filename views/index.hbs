@@ -4,6 +4,4 @@
 <div v-html="message"></div>
 <button class="btn btn-small" type="button" v-html="buttonText" @click="changeText"></button>
 
-<form action="/db_query/products" method="GET">
-    <button type="submit" class="btn">Просмотреть список продуктов в базе</button>
-</form>
+<a href="/db_query/products" class="btn">Просмотреть список продуктов в базе</a>
