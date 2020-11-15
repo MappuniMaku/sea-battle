@@ -12,6 +12,7 @@ class ScssScript {
                     data: this.scss,
                 });
 
+                console.log(`Компиляция завершена успешно, результат: "${result.css}"`);
                 resolve(result.css);
             });
         } catch (err) {
