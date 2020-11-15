@@ -8,7 +8,13 @@
 
                 <form action="/db_query/products/remove" method="POST">
                     <input type="hidden" name="id" value="{{id}}">
-                    <button type="submit" class="btn btn-small">
+                    <button
+                        type="submit"
+                        class="btn btn-small"
+                        {{#if (id = 8)}}
+                            disabled
+                        {{/if}}
+                    >
                         Удалить
                     </button>
                 </form>
