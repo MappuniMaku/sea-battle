@@ -19,7 +19,7 @@ const app = new Vue({
 
                 let result = await response.text();
 
-                console.log(result);
+                console.log(`Компиляция успешно завершена, результат: "${result}"`);
             } catch {
                 throw new Error('Ошибка отправки запроса');
             }
