@@ -44,7 +44,7 @@ router.post('/query', async (req, res) => {
     console.log(res);
 
     res.render('index', {
-        title: 'Todos list',
+        title: 'Мой говносервер',
         isIndex: true,
         products,
     });
@@ -52,7 +52,7 @@ router.post('/query', async (req, res) => {
 
 router.get('/create', (req, res) => {
     res.render('create', {
-        title: 'Create todo',
+        title: 'Скомпилировать SCSS',
         isCreate: true,
     });
 });

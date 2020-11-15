@@ -3,7 +3,9 @@ console.log('JavaScript included')
 const app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!',
+        state: 'initial',
+        message: 'Vue успешно подключен!',
+        buttonText: 'Точно?',
         scss: '',
     },
     methods: {
@@ -24,5 +26,17 @@ const app = new Vue({
                 throw new Error('Ошибка отправки запроса');
             }
         },
+
+        changeText() {
+            if (this.state === 'initial') {
+                this.state = 'afterClick';
+                this.message = 'Да!!!';
+                this.buttonText = 'Что "да"?';
+            } else {
+                this.state = 'initial';
+                this.message = 'Vue успешно подключен!';
+                this.buttonText = 'Точно?';
+            }
+        }
     }
 });
