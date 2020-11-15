@@ -6,7 +6,7 @@ class ScssScript {
     }
 
     async compileString() {
-        let promisedStyles = await new Promise((resolve, reject) => {
+        let promisedStyles = new Promise((resolve, reject) => {
             const result = sass.renderSync({
                 data: this.scss,
             });
@@ -18,7 +18,7 @@ class ScssScript {
             }
         });
 
-        promisedStyles.then((result) => {
+        await promisedStyles.then((result) => {
             return result;
         }).catch((error) => {
             return error;
