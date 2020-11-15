@@ -7,13 +7,10 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
 const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
-});
-
-hbs.registerHelper('equals8', (value) => {
-    return value === 8;
 });
 
 app.engine('hbs', hbs.engine);
