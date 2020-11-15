@@ -15,7 +15,7 @@ class ScssScript {
                 resolve(result.css);
             });
         } catch (err) {
-            return new Error('В стилях допущена ошибка');
+            return err.message;
         }
     }
 }
