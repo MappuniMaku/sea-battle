@@ -42,8 +42,6 @@ router.get('/db_query/products', async (req, res) => {
         });
     });
 
-    res.redirect('/db_query/products');
-
     res.render('query-results', {
         title: 'Результаты запроса',
         results: products,
@@ -75,7 +73,7 @@ router.post('/db_query/products/remove', async (req, res) => {
         });
     });
 
-    res.send(query_result);
+    res.redirect('/db_query/products');
 });
 
 router.get('/create', (req, res) => {

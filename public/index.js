@@ -39,13 +39,6 @@ const app = new Vue({
             }
         },
 
-        async getProducts() {
-            await fetch('/db_query/products', {
-                method: 'GET',
-                mode: 'cors',
-            });
-        },
-
         async removeProduct(id) {
             try {
                 let response = await fetch('/db_query/products/remove', {
@@ -57,8 +50,6 @@ const app = new Vue({
                 let result = await response.text();
 
                 console.log(result);
-
-                await this.getProducts();
             } catch {
                 throw new Error('Ошибка отправки запроса');
             }
