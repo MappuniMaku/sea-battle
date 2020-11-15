@@ -30,7 +30,7 @@ router.post('/db_query/products', async (req, res) => {
         client.query('SELECT * FROM products;', (error, response) => {
             try {
                 let result = response.rows.map((row) => {
-                    console.log(row.name);
+                    console.log(row);
                     return row.name;
                 }).join(', ');
 
@@ -42,8 +42,6 @@ router.post('/db_query/products', async (req, res) => {
             }
         });
     });
-
-    console.log(res);
 
     res.render('index', {
         title: 'Мой говносервер',

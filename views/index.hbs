@@ -1,23 +1,5 @@
 <h2>Мой говносервер</h2>
-
-{{#if todos.length}}
-    <ul>
-        {{#each todos}}
-            <li class="todo">
-                <form action="/complete" method="POST">
-                    <label>
-                        <input type="checkbox" name="completed">
-                        <span>{{title}}</span>
-
-                        <button class="btn btn-small" type="submit">Save</button>
-                    </label>
-                </form>
-            </li>
-        {{/each}}
-    </ul>
-{{else}}
     <p>Здесь ничего не происходит</p>
-{{/if}}
 
 <div v-html="message"></div>
 <button class="btn btn-small" type="button" v-html="buttonText" @click="changeText"></button>
