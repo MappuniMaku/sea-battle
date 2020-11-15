@@ -15,6 +15,7 @@ class ScssScript {
                 resolve(result.css);
             });
         } catch (err) {
+            console.log(`В SCSS была допущена ошибка: ${err.message}`);
             return err.message;
         }
     }
