@@ -49,7 +49,7 @@ router.get('/db_query/products', async (req, res) => {
 });
 
 router.post('/db_query/products/remove', async (req, res) => {
-    const products = await new Promise((resolve, reject) => {
+    const query_result = await new Promise((resolve) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
             ssl: {
@@ -60,30 +60,18 @@ router.post('/db_query/products/remove', async (req, res) => {
 
         client.connect();
 
-        client.query('SELECT * FROM products;', (error, response) => {
+        client.query(`DELETE FROM products WHERE product_no = ${req.body.id};`, (error, response) => {
             try {
-                let result = response.rows.map((row) => {
-                    console.log(row);
-                    return {
-                        id: row.product_no,
-                        name: row.name,
-                        price: row.price,
-                    };
-                });
-
                 client.end();
 
-                resolve(result);
+                resolve(response);
             } catch {
                 console.log(error);
             }
         });
     });
 
-    res.render('query-results', {
-        title: 'Результаты запроса',
-        results: products,
-    });
+    res.send(query_result);
 });
 
 router.get('/create', (req, res) => {

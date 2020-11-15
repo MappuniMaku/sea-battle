@@ -50,6 +50,8 @@ const app = new Vue({
                 let result = await response.text();
 
                 console.log(result);
+
+                await fetch('/db_query/products');
             } catch {
                 throw new Error('Ошибка отправки запроса');
             }
