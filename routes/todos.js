@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.post('/query', async (req, res) => {
+router.post('/db_query/products', async (req, res) => {
     let products = 'Полученные данные: ';
 
     products += await new Promise((resolve, reject) => {
