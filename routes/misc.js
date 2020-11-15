@@ -42,8 +42,9 @@ router.get('/products', async (req, res) => {
         });
     });
 
-    res.render('query-results', {
+    res.render('products', {
         title: 'Результаты запроса',
+        isProducts: true,
         results: products,
     });
 });

@@ -8,6 +8,12 @@
                 <li><a href="/">Главная</a></li>
             {{/if}}
 
+            {{#if isProducts}}
+                <li class="active"><a href="/products">Продукция</a></li>
+            {{else}}
+                <li><a href="/products">Продукция</a></li>
+            {{/if}}
+
             {{#if isCreate}}
                 <li class="active"><a href="/create">Компилировать SCSS</a></li>
             {{else}}
