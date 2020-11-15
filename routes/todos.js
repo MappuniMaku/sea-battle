@@ -42,7 +42,7 @@ router.get('/db_query/products', async (req, res) => {
         });
     });
 
-    // res.redirect('query-results');
+    res.redirect('/db_query/products');
 
     res.render('query-results', {
         title: 'Результаты запроса',
