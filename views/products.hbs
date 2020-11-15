@@ -22,17 +22,17 @@
 <form action="/db_query/products/add" method="POST">
     <div class="row">
         <div class="input-field col">
-            <input id="name" type="text" name="name">
+            <input id="name" type="text" name="name" required>
             <label for="name">Наименование</label>
         </div>
 
         <div class="input-field col">
-            <input id="price" type="number" name="price">
+            <input id="price" type="number" name="price" required>
             <label for="price">Цена</label>
         </div>
-
-        <button type="submit" class="btn btn-small">
-            Добавить
-        </button>
     </div>
+
+    <button type="submit" class="btn btn-small">
+        Добавить
+    </button>
 </form>
