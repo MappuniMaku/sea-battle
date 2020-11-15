@@ -72,6 +72,7 @@ router.post('/compile_scss', async (req, res) => {
 
     await compiledScss.then((result) => {
         res.send(result);
+        console.log('Компиляция завершена');
     }).catch((error) => {
         console.log(error);
         res.send(error);
