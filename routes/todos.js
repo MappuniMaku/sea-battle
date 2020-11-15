@@ -72,6 +72,8 @@ router.post('/db_query/products/remove', async (req, res) => {
             }
         });
     });
+
+   res.redirect('/db_query/products');
 });
 
 router.get('/create', (req, res) => {
