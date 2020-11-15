@@ -1,21 +1,11 @@
-.todo {
+.ProductsList__item {
     margin-bottom: 1rem;
-}
-
-.todo span.completed {
-    text-decoration: line-through;
-}
-
-.todo label {
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
     background: #f3f3f3;
     padding: 1rem;
 }
 
-.todo i {
-    z-index: 2;
+.ProductsList__itemText {
+    margin-right: 24px;
 }

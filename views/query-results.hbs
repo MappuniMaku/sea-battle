@@ -1,10 +1,18 @@
-<h2>Результаты запроса</h2>
+<h2>Список продуктов</h2>
 
 {{#if results.length}}
-    <ul>
+    <ul class="ProductsList">
         {{#each results}}
-            <li class="todo">
-                <span>Позиция: {{id}}, наименование: {{name}}, цена: {{price}}</span>
+            <li class="ProductsList__item">
+                <span class="ProductsList__itemText">Позиция: {{id}}, наименование: {{name}}, цена: {{price}}</span>
+
+                <button
+                    type="button"
+                    class="btn btn-small"
+                    @click="removeProduct({{id}})"
+                >
+                    Удалить
+                </button>
             </li>
         {{/each}}
     </ul>

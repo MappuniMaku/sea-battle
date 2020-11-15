@@ -10,7 +10,45 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.post('/db_query/products', async (req, res) => {
+router.get('/db_query/products', async (req, res) => {
+    const products = await new Promise((resolve, reject) => {
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        });
+
+        client.connect();
+
+        client.query('SELECT * FROM products;', (error, response) => {
+            try {
+                let result = response.rows.map((row) => {
+                    console.log(row);
+                    return {
+                        id: row.product_no,
+                        name: row.name,
+                        price: row.price,
+                    };
+                });
+
+                client.end();
+
+                resolve(result);
+            } catch {
+                console.log(error);
+            }
+        });
+    });
+
+    res.render('query-results', {
+        title: 'Результаты запроса',
+        results: products,
+    });
+});
+
+router.post('/db_query/products/remove', async (req, res) => {
     const products = await new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
