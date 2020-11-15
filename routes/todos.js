@@ -64,6 +64,8 @@ router.post('/db_query/products/remove', async (req, res) => {
             try {
                 client.end();
 
+                console.log(`Операция завершена, результат: ${response}`);
+
                 resolve(response);
             } catch {
                 console.log(error);
