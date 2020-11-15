@@ -60,7 +60,7 @@ router.post('/db_query/products/remove', async (req, res) => {
 
         client.connect();
 
-        client.query(`DELETE FROM products WHERE product_no = ${req.body.id};`, (error, response) => {
+        client.query(`DELETE FROM products WHERE product_no = ${req.body};`, (error, response) => {
             try {
                 client.end();
 
