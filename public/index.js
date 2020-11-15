@@ -38,21 +38,5 @@ const app = new Vue({
                 this.buttonText = 'Точно?';
             }
         },
-
-        async removeProduct(id) {
-            try {
-                let response = await fetch('/db_query/products/remove', {
-                    method: 'POST',
-                    mode: 'cors',
-                    body: id,
-                });
-
-                let result = await response.text();
-
-                console.log(result);
-            } catch {
-                throw new Error('Ошибка отправки запроса');
-            }
-        }
     }
 });

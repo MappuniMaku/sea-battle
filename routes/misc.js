@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get('/db_query/products', async (req, res) => {
+router.get('/products', async (req, res) => {
     const products = await new Promise((resolve, reject) => {
         const client = new Client({
             connectionString: process.env.DATABASE_URL,
@@ -73,7 +73,7 @@ router.post('/db_query/products/remove', async (req, res) => {
         });
     });
 
-   res.redirect('/db_query/products');
+   res.redirect('/products');
 });
 
 router.get('/create', (req, res) => {

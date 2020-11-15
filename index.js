@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const todoRoutes = require('./routes/todos');
+const miscRoutes = require('./routes/misc');
 const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 3000;
@@ -21,7 +21,7 @@ app.use(bodyParser.text());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(todoRoutes);
+app.use(miscRoutes);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
