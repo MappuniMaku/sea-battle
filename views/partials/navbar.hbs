@@ -19,6 +19,12 @@
             {{else}}
                 <li><a href="/create">Компилировать SCSS</a></li>
             {{/if}}
+
+          {{#if isSlider}}
+            <li class="active"><a href="/slider">Слайдер</a></li>
+          {{else}}
+            <li><a href="/slider">Слайдер</a></li>
+          {{/if}}
         </ul>
     </div>
 </nav>

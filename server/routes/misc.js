@@ -141,4 +141,11 @@ router.post('/complete', async (req, res) => {
     res.redirect('/');
 });
 
+router.get('/slider', (req, res) => {
+    res.render('slider', {
+        title: 'Слайдер',
+        isSlider: true,
+    });
+});
+
 module.exports = router;

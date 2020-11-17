@@ -1,5 +1,6 @@
 import Vue from 'vue/dist/vue.esm';
 import '../styles/global.scss';
+import '../vendor/swiper/swiper'
 
 new Vue({
     el: '#app',
