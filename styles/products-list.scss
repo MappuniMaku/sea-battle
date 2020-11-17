@@ -1,15 +1,13 @@
-.ProductsList__item {
+.ProductsList {
+  &__item {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
     background: #f3f3f3;
     padding: 1rem;
-}
+  }
 
-.ProductsList__itemText {
+  &__itemText {
     margin-right: 24px;
-}
-
-.Navigation {
-    padding-left: 32px;
+  }
 }

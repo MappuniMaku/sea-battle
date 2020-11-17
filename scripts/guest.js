@@ -1,4 +1,5 @@
 import Vue from 'vue/dist/vue.esm';
+import '../styles/global.scss';
 
 new Vue({
     el: '#app',
