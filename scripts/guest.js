@@ -1,6 +1,6 @@
-console.log('JavaScript included')
+import Vue from 'vue';
 
-const app = new Vue({
+new Vue({
     el: '#app',
     data: {
         state: 'initial',

@@ -14,7 +14,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "node-sass": "^5.0.0",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.6",
