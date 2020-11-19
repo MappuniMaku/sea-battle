@@ -1,0 +1,57 @@
+.swiper {
+  &-pagination {
+    &-bullets {
+      --pagination-default-color: #{lighten(gray, 20%)};
+      --pagination-hover-color: #{$color-blue--dark};
+      --pagination-active-color: #{$color-blue};
+
+      display: flex;
+      justify-content: center;
+      margin-top: -$swiper-bullet-padding / 2;
+    }
+
+    &-bullet {
+      cursor: pointer;
+      position: relative;
+      size: $swiper-bullet-padding + $swiper-bullet-inner-size;
+      outline: none;
+      list-style: none;
+
+      &:not(&-active) {
+        &:hover,
+        &:focus,
+        &:active {
+          &::before {
+            background-color: var(--pagination-hover-color);
+          }
+        }
+      }
+
+      &::before {
+        background-color: var(--pagination-default-color);
+        border-radius: 50%;
+        content: "";
+        display: block;
+        left: 50%;
+        position: absolute;
+        size: $swiper-bullet-inner-size;
+        transform: translate(-50%, -50%);
+        transition: background-color 0.25s ease-in-out, transform 0.25s ease-in-out;
+        top: 50%;
+      }
+
+      &-active {
+        transform: scale(1.1);
+        cursor: default;
+
+        &::before {
+          background-color: var(--pagination-active-color);
+        }
+      }
+
+      span {
+        font-size: 0;
+      }
+    }
+  }
+}

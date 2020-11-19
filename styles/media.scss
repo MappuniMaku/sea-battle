@@ -1,0 +1,115 @@
+$breakpoint-xxsmall: 370px !default;
+$breakpoint-xsmall: 425px !default;
+$breakpoint-small: 640px !default;
+$breakpoint-medium: 900px !default;
+$breakpoint-large: 1000px !default;
+$breakpoint-xlarge: 1200px !default;
+$breakpoint-xxlarge: 1440px !default;
+
+@mixin vw-xxsmall-down {
+  @media (max-width: $breakpoint-xxsmall - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xxsmall-up {
+  @media (min-width: $breakpoint-xxsmall) {
+    @content;
+  }
+}
+
+@mixin vw-xsmall-down {
+  @media (max-width: $breakpoint-xsmall - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xsmall-up {
+  @media (min-width: $breakpoint-xsmall) {
+    @content;
+  }
+}
+
+@mixin vw-small-down {
+  @media (max-width: $breakpoint-small - 1) {
+    @content;
+  }
+}
+
+@mixin vw-small-up {
+  @media (min-width: $breakpoint-small) {
+    @content;
+  }
+}
+
+@mixin vw-small-only {
+  @media (min-width: $breakpoint-xsmall) and (max-width: $breakpoint-small - 1) {
+    @content;
+  }
+}
+
+@mixin vw-medium-down {
+  @media (max-width: $breakpoint-medium - 1) {
+    @content;
+  }
+}
+
+@mixin vw-medium-up {
+  @media (min-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin vw-medium-only {
+  @media (min-width: $breakpoint-small) and (max-width: $breakpoint-medium - 1) {
+    @content;
+  }
+}
+
+@mixin vw-large-down {
+  @media (max-width: $breakpoint-large - 1) {
+    @content;
+  }
+}
+
+@mixin vw-large-up {
+  @media (min-width: $breakpoint-large) {
+    @content;
+  }
+}
+
+@mixin vw-large-only {
+  @media (min-width: $breakpoint-medium) and (max-width: $breakpoint-large - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xlarge-only {
+  @media (min-width: $breakpoint-large) and (max-width: $breakpoint-xlarge - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xlarge-down {
+  @media (max-width: $breakpoint-xlarge - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xlarge-up {
+  @media (min-width: $breakpoint-xlarge) {
+    @content;
+  }
+}
+
+@mixin vw-xxlarge-down {
+  @media (max-width: $breakpoint-xxlarge - 1) {
+    @content;
+  }
+}
+
+@mixin vw-xxlarge-up {
+  @media (min-width: $breakpoint-xxlarge) {
+    @content;
+  }
+}

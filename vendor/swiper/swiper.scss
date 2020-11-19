@@ -1,0 +1,182 @@
+@import "swiper-settings";
+@import "swiper-layout";
+@import "swiper-pagination";
+
+.swiper {
+  $block: &;
+
+  &-container {
+    &-with-scrollbar {
+      @include vw-small-down {
+        padding-bottom: 24px;
+      }
+    }
+  }
+
+  &-outer-container {
+    position: relative;
+  }
+
+  &-slide {
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  &-buttons {
+    &-center {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      width: 100%;
+      height: 0;
+
+      #{$block}-button {
+        &-prev {
+          left: -64px;
+          z-index: 100;
+          transform: translate(-50%, -50%);
+
+          @include vw-xlarge-down {
+            left: -48px;
+          }
+
+          @include vw-medium-down {
+            left: -32px;
+          }
+
+          @include vw-small-down {
+            left: 0;
+          }
+        }
+
+        &-next {
+          right: -64px;
+          z-index: 100;
+          transform: translate(50%, -50%);
+
+          @include vw-xlarge-down {
+            right: -48px;
+          }
+
+          @include vw-medium-down {
+            right: -32px;
+          }
+
+          @include vw-small-down {
+            right: 0;
+          }
+        }
+      }
+
+      &-inside {
+        #{$block}-button {
+          &-prev {
+            left: 32px;
+          }
+
+          &-next {
+            right: 32px;
+          }
+        }
+      }
+    }
+  }
+
+  &-button {
+    $arrow: &;
+
+    @include custom-schema("--swiper-arrow", $button-slider-control-schema);
+
+    align-items: center;
+    appearance: none;
+    width: $swiper-arrow-width;
+    height: $swiper-arrow-width;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    outline: none;
+    padding: $swiper-arrow-padding;
+    position: absolute;
+    top: 50%;
+    transition: 0.25s ease-in-out;
+    transition-property: color, background-color, border-color, opacity, box-shadow;
+    z-index: 1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    border-color: var(--swiper-arrow-default-border);
+    background-color: var(--swiper-arrow-default-background);
+    color: var(--swiper-arrow-default-color);
+
+    @include vw-medium-down {
+      width: $swiper-arrow-width-m;
+      height: $swiper-arrow-width-m;
+    }
+
+    @media (hover: hover) {
+      &:not(&-disabled) {
+        &:hover {
+          background-color: var(--swiper-arrow-hover-background);
+          color: var(--swiper-arrow-hover-color);
+          border-color: var(--swiper-arrow-hover-border);
+        }
+
+        // Focus state for tab navigation
+        &:focus-within,
+        &:focus {
+          background-color: var(--swiper-arrow-focus-background);
+          color: var(--swiper-arrow-focus-color);
+          border-color: var(--swiper-arrow-focus-border);
+        }
+      }
+    }
+
+    &:not(&-disabled) {
+      &:active {
+        background-color: var(--swiper-arrow-active-background);
+        color: var(--swiper-arrow-active-color);
+        border-color: var(--swiper-arrow-active-border);
+      }
+    }
+
+    &-prev {
+      svg {
+        margin-right: 1px;
+      }
+    }
+
+    &-next {
+      svg {
+        margin-left: 3px;
+      }
+    }
+
+    svg {
+      width: 16px;
+      stroke: currentColor;
+
+      @include vw-medium-down {
+        width: 12px;
+      }
+    }
+
+    &-disabled {
+      background-color: var(--swiper-arrow-disabled-background);
+      color: var(--swiper-arrow-disabled-color);
+      border-color: var(--swiper-arrow-disabled-border);
+      pointer-events: none;
+    }
+  }
+
+  &-scrollbar {
+    background-color: $swiper-scrollbar-default-background;
+
+    @include vw-small-up {
+      display: none;
+    }
+  }
+
+  &-scrollbar-drag {
+    background-color: $swiper-scrollbar-active-background;
+  }
+}

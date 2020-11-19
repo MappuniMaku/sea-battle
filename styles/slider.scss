@@ -1,0 +1,73 @@
+.GallerySlider {
+  $block: &;
+
+  @include vw-xlarge-down {
+    margin: 0 40px;
+  }
+
+  @include vw-medium-down {
+    margin: 0 24px;
+  }
+
+  @include vw-small-down {
+    margin: 0;
+  }
+
+  &__sliderWrapper {
+    @include slider-layout(
+      (
+        lowest: (
+          mode: 'free',
+          full-screen: true,
+          count: 1,
+          gutter: 16px,
+          width: 250px,
+          max-width: 70%,
+        ),
+        s: (
+          mode: 'normal',
+          full-screen: false,
+          count: 2,
+          gutter: 24px,
+        ),
+        m: (
+          count: 3,
+        ),
+        l: (
+          gutter: 32px,
+        ),
+      )
+    );
+  }
+
+  &__item {
+    &:hover,
+    &:active,
+    &:focus {
+      #{$block}__image {
+        @include image-with-scale-active;
+      }
+    }
+  }
+
+  &__picture {
+    @include aspect-ratio-picture(276, 208);
+  }
+
+  &__image {
+    @include image-with-scale;
+  }
+
+  &__navButton {
+    @include vw-small-down {
+      //@include custom-schema("--swiper-arrow", $button-blue-schema);
+      display: none;
+    }
+  }
+
+  &__scrollbar {
+    @include vw-small-up {
+      display: none;
+    }
+  }
+}

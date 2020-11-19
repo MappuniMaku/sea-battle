@@ -46,7 +46,7 @@ export const defaultOptions = {
  * @return Element|null
  */
 function getNode(element) {
-    return document.querySelector(element);
+    return element;
 }
 
 
@@ -114,7 +114,7 @@ function updateProperty(instance, options, property, callback) {
     if (options[property] === true) {
         if (options[property] === true) options[property] = callback(instance);
 
-        if (Is.object(options[property])) {
+        if (typeof (options[property]) === 'object') {
             options[property] = { ...callback(instance), ...options[property]};
         }
     }

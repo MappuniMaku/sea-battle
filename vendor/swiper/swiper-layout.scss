@@ -1,0 +1,184 @@
+@function slide-width($count, $gutter) {
+  @return calc(100% / #{$count} + #{$gutter / $count});
+}
+
+@mixin calc-slide($count, $gutter) {
+  padding: 0 $gutter 0 0;
+  width: slide-width($count, $gutter);
+  max-width: unset;
+
+  &:last-child {
+    margin-right: -$gutter;
+  }
+}
+
+@mixin calc-grid-item($count, $gutter) {
+  padding: $gutter / 2;
+  flex: 0 0 100% / $count;
+  max-width: 100% / $count;
+}
+
+@mixin calc-slide-free-mode($gutter, $max-width, $width: $max-width) {
+  width: $width;
+  max-width: $max-width;
+  padding: 0 0 0 $gutter;
+
+  &:last-child {
+    margin-right: $gutter;
+  }
+}
+
+@mixin calc-slide-centered-mode($gutter, $max-width, $width: $max-width) {
+  width: $width;
+  max-width: $max-width;
+  padding: 0 ($gutter / 2);
+}
+
+@mixin get-styles-for-item($map, $for-grid) {
+  $count: map-get($map, "count");
+  $gutter: map-get($map, "gutter");
+
+  @if ($for-grid) {
+    @include calc-grid-item($count, $gutter);
+  } @else {
+    $mode: map-get($map, "mode");
+    $width: map-get($map, "width");
+    $max-width: map-get($map, "max-width");
+
+    @if ($mode == "free") {
+      @include calc-slide-free-mode($gutter, $max-width, $width);
+    } @else if ($mode == "centered") {
+      @include calc-slide-centered-mode($gutter, $max-width, $width);
+    } @else {
+      @include calc-slide($count, $gutter);
+    }
+  }
+}
+
+@mixin get-styles-for-container($map, $for-grid) {
+  $gutter: map-get($map, "gutter");
+
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+
+  @if ($for-grid) {
+    overflow: auto;
+    margin: -$gutter / 2;
+  } @else {
+    $full-screen: map-get($map, "full-screen");
+    $mode: map-get($map, "mode");
+
+    overflow: hidden;
+    margin: 0;
+
+    @if ($full-screen) {
+      margin: 0 (-$gutter);
+
+      @if ($mode != "free" and $mode != "centered") {
+        padding: 0 $gutter;
+      }
+    }
+  }
+}
+
+@mixin get-styles-for-wrapper($map, $for-grid) {
+  $gutter: map-get($map, "gutter");
+
+  @if ($for-grid) {
+    flex-wrap: wrap;
+    overflow: auto;
+  } @else {
+    flex-wrap: nowrap;
+    overflow: unset;
+  }
+}
+
+@mixin get-styles-for-slider($settings, $for-grid) {
+  .swiper-slide {
+    @include get-styles-for-item($settings, $for-grid);
+  }
+
+  .swiper-container {
+    @include get-styles-for-container($settings, $for-grid);
+  }
+
+  .swiper-wrapper {
+    @include get-styles-for-wrapper($settings, $for-grid);
+  }
+}
+
+@mixin use-breakpoint($media) {
+  $breakpoints: (
+          "xxl": $breakpoint-xxlarge,
+          "xl": $breakpoint-xlarge,
+          "l": $breakpoint-large,
+          "m": $breakpoint-medium,
+          "s": $breakpoint-small,
+          "xs": $breakpoint-xsmall,
+          "xxs": $breakpoint-xxsmall,
+          "lowest": 1px,
+  );
+
+  $breakpoint: map-get($breakpoints, $media) or $media;
+
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin slider-layout($map) {
+  // Default settings
+  $mode: "normal";
+  $count: 3;
+  $gutter: 0;
+  $support-grid: false;
+  $full-screen: false;
+  $width: 100%;
+  $max-width: 100%;
+
+  @each $media, $settings in $map {
+    $mode: map-get($settings, "mode") or $mode; // cache
+    $count: map-get($settings, "count") or $count; // cache
+    $gutter: map-get($settings, "gutter") or $gutter; // cache
+    $width: map-get($settings, "width") or $width; // cache
+    $max-width: map-get($settings, "max-width") or $max-width; // cache
+
+    // Boolean
+    $support-grid-current: map-get($settings, "support-grid");
+
+    @if (type-of($support-grid-current) != "null") {
+      $support-grid: $support-grid-current;
+    }
+
+    // Boolean
+    $full-screen-current: map-get($settings, "full-screen");
+
+    @if (type-of($full-screen-current) != "null") {
+      $full-screen: $full-screen-current;
+    }
+
+    $settings: map-merge(
+      $settings,
+      (
+        mode: $mode,
+        count: $count,
+        gutter: $gutter,
+        width: $width,
+        max-width: $max-width,
+        support-grid: $support-grid,
+        full-screen: $full-screen,
+      )
+    );
+
+    @include use-breakpoint($media) {
+      @include get-styles-for-slider($settings, false);
+
+      @if ($support-grid) {
+        &.swiper-grid {
+          @include get-styles-for-slider($settings, true);
+        }
+      }
+    }
+  }
+}

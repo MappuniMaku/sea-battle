@@ -1,2 +1,12 @@
+@import "base";
+@import "~swiper/swiper";
+@import "~swiper/components/scrollbar/scrollbar";
+@import "media";
+@import "variables";
+@import "partials";
+@import "buttons";
+@import "layout";
+@import "../vendor/swiper/swiper";
 @import "navigation";
 @import "products-list";
+@import "slider";

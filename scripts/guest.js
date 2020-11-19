@@ -1,6 +1,8 @@
 import Vue from 'vue/dist/vue.esm';
 import '../styles/global.scss';
 import '../vendor/swiper/swiper'
+import { initSwiperInstances } from '../vendor/swiper/swiper';
+import gallerySliderOptions from '../scripts/slider-options';
 
 new Vue({
     el: '#app',
@@ -42,3 +44,12 @@ new Vue({
         },
     }
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+    initSwiperInstances([
+        {
+            selector: '[data-gallery-slider]',
+            options: gallerySliderOptions,
+        },
+    ]);
+})
