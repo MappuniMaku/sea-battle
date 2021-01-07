@@ -9,12 +9,21 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 const expressWs = require('express-ws')(app);
+let usersCount = 0;
 
-app.ws('/', function(ws, req) {
-    ws.on('message', function(msg) {
-        console.log(msg);
+app.ws('/chat', (ws, req) => {
+    expressWs.getWss().on('connection', () => {
+        usersCount++;
+        console.log(usersCount);
     });
-    console.log('socket', req.testing);
+
+    ws.on('message', msg => {
+        expressWs.getWss().clients.forEach(client => {
+            if (client.readyState === ws.OPEN) {
+                client.send(msg);
+            }
+        })
+    });
 });
 
 const hbs = exphbs.create({

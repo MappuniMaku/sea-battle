@@ -3,7 +3,14 @@ import '../styles/global.scss';
 import '../vendor/swiper/swiper'
 import { initSwiperInstances } from '../vendor/swiper/swiper';
 import gallerySliderOptions from '../scripts/slider-options';
-const ws = new WebSocket('wss://slider-constructor.herokuapp.com');
+const ws = new WebSocket('wss://slider-constructor.herokuapp.com/chat');
+// const ws = new WebSocket('ws://localhost:3000/chat');
+
+const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+};
 
 new Vue({
     el: '#app',
@@ -12,6 +19,16 @@ new Vue({
         message: 'Vue успешно подключен!',
         buttonText: 'Точно?',
         scss: '',
+        chatMessage: '',
+        messages: [],
+    },
+    beforeMount() {
+        ws.onmessage = (message) => {
+            this.messages.push({
+                time: new Date().toLocaleString('ru', options),
+                message: message.data,
+            });
+        };
     },
     methods: {
         async compileScss(e) {
@@ -42,10 +59,14 @@ new Vue({
                 this.message = 'Vue успешно подключен!';
                 this.buttonText = 'Точно?';
             }
-
-            ws.send('fdsfds');
         },
-    }
+
+        sendMessage(e) {
+            e.preventDefault();
+            ws.send(this.chatMessage);
+            this.chatMessage = '';
+        },
+    },
 });
 
 window.addEventListener('DOMContentLoaded', () => {

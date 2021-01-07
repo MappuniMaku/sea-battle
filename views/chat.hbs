@@ -1,0 +1,21 @@
+<div class="Chat">
+  <div class="Chat__header">
+    <ul>
+      <li v-for="item in messages">
+        <span v-html="item.time"></span>
+        <span v-html="item.message"></span>
+      </li>
+    </ul>
+
+    <form class="Chat__form" @submit="sendMessage">
+      <div class="input-field">
+        <input v-model="chatMessage" id="message" type="text" class="validate" required>
+        <label for="message">Введите сообщение</label>
+      </div>
+
+      <button type="submit" class="btn btn-small">
+        Отправить
+      </button>
+    </form>
+  </div>
+</div>

@@ -148,4 +148,11 @@ router.get('/slider', (req, res) => {
     });
 });
 
+router.get('/chat', (req, res) => {
+    res.render('chat', {
+        title: 'Чатик',
+        isChat: true,
+    });
+});
+
 module.exports = router;
