@@ -3,7 +3,7 @@ import '../styles/global.scss';
 import '../vendor/swiper/swiper'
 import { initSwiperInstances } from '../vendor/swiper/swiper';
 import gallerySliderOptions from '../scripts/slider-options';
-const ws = new WebSocket('ws://slider-constructor.herokuapp.com');
+const ws = new WebSocket('wss://slider-constructor.herokuapp.com');
 
 new Vue({
     el: '#app',
