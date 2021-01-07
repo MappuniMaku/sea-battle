@@ -3,6 +3,7 @@ import '../styles/global.scss';
 import '../vendor/swiper/swiper'
 import { initSwiperInstances } from '../vendor/swiper/swiper';
 import gallerySliderOptions from '../scripts/slider-options';
+const ws = new WebSocket('ws://slider-constructor.herokuapp.com');
 
 new Vue({
     el: '#app',
@@ -41,6 +42,8 @@ new Vue({
                 this.message = 'Vue успешно подключен!';
                 this.buttonText = 'Точно?';
             }
+
+            ws.send('fdsfds');
         },
     }
 });
@@ -52,4 +55,4 @@ window.addEventListener('DOMContentLoaded', () => {
             options: gallerySliderOptions,
         },
     ]);
-})
+});
