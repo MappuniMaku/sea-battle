@@ -16,6 +16,7 @@ const timeOptions = {
     second: 'numeric'
 };
 let usersCount = 0;
+let connectedUsers = [];
 
 app.ws('/chat', (ws, req) => {
     ws.on('message', msg => {
@@ -27,11 +28,21 @@ app.ws('/chat', (ws, req) => {
             time: new Date().toLocaleString('ru', timeOptions),
         };
 
+        if (parsedMessage.isUpdating) {
+            connectedUsers.push(parsedMessage.userName);
+            payload = {
+                ...payload,
+                connectedUsers,
+            };
+        }
+
         if (parsedMessage.isNewUser) {
             usersCount++;
+            connectedUsers.push(parsedMessage.userName);
             payload = {
                 ...payload,
                 usersCount,
+                connectedUsers,
             };
         }
 
@@ -44,9 +55,11 @@ app.ws('/chat', (ws, req) => {
 
     ws.on('close', () => {
         usersCount--;
+        connectedUsers = [];
 
         let payload = {
             usersCount,
+            requireUpdate: true,
         };
 
         expressWs.getWss().clients.forEach(client => {

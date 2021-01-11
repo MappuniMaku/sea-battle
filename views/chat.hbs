@@ -14,8 +14,13 @@
 
   <div class="Chat__main" v-show="isLoggedIn">
     <div class="Chat__users">
-      <span>Пользователей в чате:&nbsp;</span>
+      <span>Пользователей в чате:</span>
       <span v-html="usersCount"></span>
+      <span>
+        (
+          <span v-html="connectedUsersNames"></span>
+        )
+      </span>
     </div>
 
     <ul>

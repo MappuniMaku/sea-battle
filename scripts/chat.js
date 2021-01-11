@@ -12,6 +12,12 @@ new Vue({
         isLoggedIn: false,
         usersCount: 0,
         ws: null,
+        connectedUsers: [],
+    },
+    computed: {
+        connectedUsersNames() {
+            return this.connectedUsers.join(', ');
+        },
     },
     methods: {
         sendMessage(e) {
@@ -35,6 +41,18 @@ new Vue({
 
                 if (parsedResponse.usersCount) {
                     this.usersCount = parsedResponse.usersCount;
+                }
+
+                if (parsedResponse.connectedUsers) {
+                    this.connectedUsers = parsedResponse.connectedUsers;
+                }
+
+                if (parsedResponse.requireUpdate) {
+                    const payload = {
+                        userName: this.userName,
+                        isUpdating: true,
+                    };
+                    this.ws.send(JSON.stringify(payload));
                 }
             };
         },
