@@ -9,18 +9,49 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 const expressWs = require('express-ws')(app);
+
+const timeOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+};
 let usersCount = 0;
 
 app.ws('/chat', (ws, req) => {
-    expressWs.getWss().on('connection', () => {
-        usersCount++;
-        console.log(usersCount);
-    });
-
     ws.on('message', msg => {
+        const parsedMessage = JSON.parse(msg);
+
+        let payload = {
+            userName: parsedMessage.userName,
+            message: parsedMessage.message,
+            time: new Date().toLocaleString('ru', timeOptions),
+        };
+
+        if (parsedMessage.isNewUser) {
+            usersCount++;
+            payload = {
+                ...payload,
+                usersCount,
+            };
+        }
+
         expressWs.getWss().clients.forEach(client => {
             if (client.readyState === ws.OPEN) {
-                client.send(msg);
+                client.send(JSON.stringify(payload));
+            }
+        })
+    });
+
+    ws.on('close', () => {
+        usersCount--;
+
+        let payload = {
+            usersCount,
+        };
+
+        expressWs.getWss().clients.forEach(client => {
+            if (client.readyState === ws.OPEN) {
+                client.send(JSON.stringify(payload));
             }
         })
     });

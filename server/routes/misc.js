@@ -108,8 +108,8 @@ router.post('/db_query/products/add', async (req, res) => {
     res.redirect('/products');
 });
 
-router.get('/create', (req, res) => {
-    res.render('create', {
+router.get('/scss-compiler', (req, res) => {
+    res.render('scss-compiler', {
         title: 'Скомпилировать SCSS',
         isCreate: true,
     });

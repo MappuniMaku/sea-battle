@@ -1,8 +1,29 @@
-<div class="Chat">
-  <div class="Chat__header">
+<div class="Chat" id="chat">
+  <div class="Chat__signup" v-show="!isLoggedIn">
+    <form @submit="enterChat">
+      <div class="input-field">
+        <input v-model="userName" id="user-name" type="text" class="validate" required>
+        <label for="user-name">Чтобы войти в чат, введите свое имя</label>
+      </div>
+
+      <button type="submit" class="btn btn-small">
+        Войти
+      </button>
+    </form>
+  </div>
+
+  <div class="Chat__main" v-show="isLoggedIn">
+    <div class="Chat__users">
+      <span>Пользователей в чате:&nbsp;</span>
+      <span v-html="usersCount"></span>
+    </div>
+
     <ul>
       <li v-for="item in messages">
+        <span v-html="item.userName"></span>
+        в
         <span v-html="item.time"></span>
+        написал(а):
         <span v-html="item.message"></span>
       </li>
     </ul>
@@ -15,6 +36,10 @@
 
       <button type="submit" class="btn btn-small">
         Отправить
+      </button>
+
+      <button type="button" class="btn btn-small" @click="exitChat">
+        Покинуть чат
       </button>
     </form>
   </div>
