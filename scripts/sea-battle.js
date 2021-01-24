@@ -430,7 +430,7 @@ new Vue({
         },
 
         quitGame() {
-            if (!confirm('Вы действительно хотите покинуть игру?') === true) return;
+            if (!confirm('Вы действительно хотите покинуть игру?')) return;
 
             localStorage.setItem('seaBattle', JSON.stringify({user: this.user}));
             this.isGameInProgress = false;
