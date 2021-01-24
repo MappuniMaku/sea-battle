@@ -1,7 +1,7 @@
 import Vue from 'vue/dist/vue.min';
 
-// const wsAddress = 'wss://slider-constructor.herokuapp.com/chat';
-const wsAddress = 'ws://localhost:3000/chat';
+const wsAddress = 'wss://slider-constructor.herokuapp.com/chat';
+// const wsAddress = 'ws://localhost:3000/chat';
 
 new Vue({
     el: '#chat',
