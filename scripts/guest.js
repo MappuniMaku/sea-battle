@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm';
+import Vue from 'vue/dist/vue.min';
 import './chat';
 import './sea-battle';
 import './scss-compiler';

@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm';
+import Vue from 'vue/dist/vue.min';
 
 // const wsAddress = 'wss://slider-constructor.herokuapp.com/chat';
 const wsAddress = 'ws://localhost:3000/chat';
