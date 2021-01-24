@@ -2,23 +2,23 @@
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">Мой говносервер</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {{#if isIndex}}
-                <li class="active"><a href="/">Главная</a></li>
-            {{else}}
-                <li><a href="/">Главная</a></li>
-            {{/if}}
+          {{#if isIndex}}
+              <li class="active"><a href="/">Главная</a></li>
+          {{else}}
+              <li><a href="/">Главная</a></li>
+          {{/if}}
 
-            {{#if isProducts}}
-                <li class="active"><a href="/products">Продукция</a></li>
-            {{else}}
-                <li><a href="/products">Продукция</a></li>
-            {{/if}}
+          {{#if isProducts}}
+              <li class="active"><a href="/products">Продукция</a></li>
+          {{else}}
+              <li><a href="/products">Продукция</a></li>
+          {{/if}}
 
-            {{#if isCreate}}
-                <li class="active"><a href="/scss-compiler">Компилировать SCSS</a></li>
-            {{else}}
-                <li><a href="/scss-compiler">Компилировать SCSS</a></li>
-            {{/if}}
+          {{#if isCreate}}
+              <li class="active"><a href="/scss-compiler">Компилировать SCSS</a></li>
+          {{else}}
+              <li><a href="/scss-compiler">Компилировать SCSS</a></li>
+          {{/if}}
 
           {{#if isSlider}}
             <li class="active"><a href="/slider">Слайдер</a></li>
@@ -30,6 +30,12 @@
             <li class="active"><a href="/chat">Чатик</a></li>
           {{else}}
             <li><a href="/chat">Чатик</a></li>
+          {{/if}}
+
+          {{#if isSeaBattle}}
+            <li class="active"><a href="/sea-battle">Морской ♂boy♂</a></li>
+          {{else}}
+            <li><a href="/sea-battle">Морской ♂boy♂</a></li>
           {{/if}}
         </ul>
     </div>

@@ -1,0 +1,114 @@
+.SeaBattle {
+  $block: &;
+
+  &__fieldsWrapper {
+    display: flex;
+  }
+
+  &__field {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-auto-rows: 30px;
+    width: 300px;
+
+    &--opponent {
+      #{$block}__cell {
+        &--empty {
+          cursor: pointer;
+
+          &:hover {
+            background-color: aliceblue;
+          }
+        }
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+    }
+
+    &:not(last-child) {
+      margin-right: 48px;
+    }
+  }
+
+  &__shipTypeSelect {
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  &__clearButton {
+    margin-bottom: 24px;
+  }
+
+  &__cell {
+    border: 1px gray solid;
+
+    &--missedShot,
+    &--ship,
+    &--temporaryShip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    &--missedShot {
+      &::before {
+        border-radius: 50%;
+        background-color: gray;
+      }
+    }
+
+    &--ship {
+      &::before {
+        background-color: blue;
+      }
+    }
+
+    &--temporaryShip {
+      cursor: pointer;
+
+      &::before {
+        background-color: rgba(blue, 0.5);
+      }
+    }
+
+    &--hit {
+      position: relative;
+      overflow: hidden;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        display: block;
+        width: 2px;
+        height: 200%;
+        background-color: red;
+        transform-origin: top;
+      }
+
+      &::before {
+        left: -1px;
+        transform: rotate(-45deg);
+      }
+
+      &::after {
+        right: -1px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &__quitButton {
+    margin-top: 24px;
+  }
+}

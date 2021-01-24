@@ -1,5 +1,6 @@
 import Vue from 'vue/dist/vue.esm';
 import './chat';
+import './sea-battle';
 import './scss-compiler';
 import '../styles/global.scss';
 import '../vendor/swiper/swiper'

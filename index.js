@@ -10,6 +10,14 @@ const app = express();
 
 const expressWs = require('express-ws')(app);
 
+function sendWsMessageToAllClients(ws, payload = {}) {
+    expressWs.getWss().clients.forEach(client => {
+        if (client.readyState === ws.OPEN) {
+            client.send(JSON.stringify(payload));
+        }
+    });
+}
+
 const timeOptions = {
     hour: 'numeric',
     minute: 'numeric',
@@ -46,27 +54,136 @@ app.ws('/chat', (ws, req) => {
             };
         }
 
-        expressWs.getWss().clients.forEach(client => {
-            if (client.readyState === ws.OPEN) {
-                client.send(JSON.stringify(payload));
-            }
-        })
+        sendWsMessageToAllClients(ws, payload);
     });
 
     ws.on('close', () => {
         usersCount--;
         connectedUsers = [];
 
-        let payload = {
+        const payload = {
             usersCount,
             requireUpdate: true,
         };
 
-        expressWs.getWss().clients.forEach(client => {
-            if (client.readyState === ws.OPEN) {
-                client.send(JSON.stringify(payload));
+        sendWsMessageToAllClients(ws, payload);
+    });
+});
+
+const EVENT_TYPES = {
+    LOBBY_ENTER: 'lobbyEnter',
+    REQUEST_LOBBY_PLAYERS: 'requestLobbyPlayers',
+    UPDATE_LOBBY_PLAYERS: 'updateLobbyPlayers',
+    START_MATCH_REQUEST: 'startMatchRequest',
+    GAME_STARTED: 'gameStarted',
+    SUBMIT_SHIP_POSITIONS: 'submitShipPositions',
+    HIT_CELL: 'hitCell',
+};
+
+const CELL_STATES = {
+    EMPTY: 'empty',
+    MISSED_SHOT: 'missedShot',
+    SHIP: 'ship',
+    HIT: 'hit',
+    TEMPORARY_SHIP: 'temporaryShip',
+};
+
+let connectedPlayers = [];
+const games = {};
+
+function updatePlayersList(ws) {
+    connectedPlayers = [];
+
+    sendWsMessageToAllClients(ws, {
+        eventType: EVENT_TYPES.REQUEST_LOBBY_PLAYERS,
+    });
+}
+
+app.ws('/sea-battle', (ws, req) => {
+    ws.on('message', msg => {
+        const parsedMessage = JSON.parse(msg);
+
+        if (parsedMessage.eventType === EVENT_TYPES.LOBBY_ENTER) {
+            connectedPlayers.push(parsedMessage.user);
+
+            let payload = {
+                eventType: EVENT_TYPES.UPDATE_LOBBY_PLAYERS,
+                players: connectedPlayers,
+            };
+
+            sendWsMessageToAllClients(ws, payload);
+
+            const currentGame = games[parsedMessage.gameId];
+
+            if (currentGame !== undefined) {
+                const payload = {
+                    eventType: EVENT_TYPES.GAME_STARTED,
+                    game: currentGame,
+                };
+
+                sendWsMessageToAllClients(ws, payload);
             }
-        })
+        }
+
+        if (parsedMessage.eventType === EVENT_TYPES.START_MATCH_REQUEST) {
+            const game = {
+                id: Date.now().toString(),
+                players: parsedMessage.players,
+            };
+
+            games[game.id] = game;
+
+            const payload = {
+                eventType: EVENT_TYPES.GAME_STARTED,
+                game,
+            };
+
+            sendWsMessageToAllClients(ws, payload);
+
+            updatePlayersList(ws);
+        }
+
+        if (parsedMessage.eventType === EVENT_TYPES.SUBMIT_SHIP_POSITIONS) {
+            const game = games[parsedMessage.gameId];
+            game[parsedMessage.userId] = parsedMessage.field;
+
+            if (game[game.players[0].id] !== undefined && game[game.players[1].id] !== undefined) {
+                game.turn = game.players[Math.floor(Math.random() * 2)].id;
+            }
+
+            const payload = {
+                eventType: EVENT_TYPES.SUBMIT_SHIP_POSITIONS,
+                game,
+            };
+
+            sendWsMessageToAllClients(ws, payload);
+        }
+
+        if (parsedMessage.eventType === EVENT_TYPES.HIT_CELL) {
+            const game = games[parsedMessage.gameId];
+            game[parsedMessage.targetPlayer] = parsedMessage.targetField;
+            const status = parsedMessage.targetField[parsedMessage.targetCell];
+
+            if (status === CELL_STATES.MISSED_SHOT) {
+                game.turn = parsedMessage.targetPlayer;
+            } else if (status === CELL_STATES.HIT) {
+                const destroyedShips = parsedMessage.targetField.filter(cell => cell === CELL_STATES.HIT);
+                if (destroyedShips.length === 20) {
+                    game.winner = parsedMessage.shootingPlayer;
+                }
+            }
+
+            const payload = {
+                eventType: EVENT_TYPES.HIT_CELL,
+                game,
+            };
+
+            sendWsMessageToAllClients(ws, payload);
+        }
+    });
+
+    ws.on('close', () => {
+        updatePlayersList(ws);
     });
 });
 
