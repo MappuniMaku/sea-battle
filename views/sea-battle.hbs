@@ -12,13 +12,13 @@
     </form>
   </div>
 
-  <div class="SeaBattle__main" v-show="isLoggedIn">
+  <div class="SeaBattle__main" v-show="isLoggedIn" v-cloak>
     <h1>Морской ♂boy♂</h1>
 
-    <div v-show="!isGameInProgress" v-cloak>
+    <div v-show="!isGameInProgress">
       <h4 v-html="`${user.name}, здарова, ёптэ!`"></h4>
 
-      <div v-show="connectedPlayers.length > 0" v-cloak>
+      <div v-show="connectedPlayers.length > 0">
         <h4>Список игроков:</h4>
         <ul>
           <li v-for="player in connectedPlayers">
@@ -29,14 +29,16 @@
           </li>
         </ul>
       </div>
+
+      <h4 v-show="connectedPlayers.length === 0">К сожалению, никого нет онлайн((</h4>
     </div>
 
-    <div v-show="isGameInProgress" v-cloak>
+    <div v-show="isGameInProgress">
       <h4 v-html="`Начался адский замес с ${opponent.name}!`"></h4>
 
       <h4 v-html="status"></h4>
 
-      <div v-show="isShipPlacementInProgress" v-cloak>
+      <div v-show="isShipPlacementInProgress">
         <span>Выберите тип корабля:</span>
         <select class="SeaBattle__shipTypeSelect" v-model="chosenShipType">
           <option v-for="type in AVAILABLE_SHIP_TYPES" :value="type.value" v-html="type.label"></option>
@@ -61,7 +63,6 @@
             v-show="isAllShipsSet"
             class="SeaBattle__field SeaBattle__field--opponent"
             :class="{'SeaBattle__field--disabled' : !isOurTurn}"
-            v-cloak
         >
           <li
               v-for="(cell, index) in fields.opponents"
@@ -73,7 +74,7 @@
         </ul>
       </div>
 
-      <button v-show="isGameOver" type="button" class="btn btn-small SeaBattle__quitButton" @click="quitGame" v-cloak>
+      <button v-show="isGameOver" type="button" class="btn btn-small SeaBattle__quitButton" @click="quitGame">
         Выйти
       </button>
     </div>
