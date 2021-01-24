@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm';
+import Vue from 'vue/dist/vue.min';
 import { EVENT_TYPES, CELL_STATES, SHIP_TYPES, GENERAL_SHIP_TYPES, STATUSES } from './constants';
 
 const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
