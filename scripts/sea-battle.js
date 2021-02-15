@@ -1,4 +1,5 @@
 import Vue from 'vue/dist/vue.min';
+// import Vue from 'vue/dist/vue';
 import { EVENT_TYPES, CELL_STATES, SHIP_TYPES, GENERAL_SHIP_TYPES, STATUSES } from './constants';
 
 const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
@@ -53,6 +54,31 @@ new Vue({
         this.enterLobby();
     },
     methods: {
+        checkAliveState(cellNumber) {
+            const hitCells = [cellNumber];
+
+            this.getShipPositionCells(cellNumber, hitCells);
+
+            let isShipAlive = false;
+
+            hitCells.forEach(cell => {
+                if (this.fields.opponents[cell] === CELL_STATES.SHIP) {
+                    isShipAlive = true;
+                }
+            });
+
+            if (isShipAlive) return;
+
+            hitCells.forEach(item => {
+                const cellsAroundKilledShip = this.getNearbyCells(item);
+                cellsAroundKilledShip.forEach(cell => {
+                    if (this.fields.opponents[cell] === CELL_STATES.EMPTY) {
+                        this.fields.opponents[cell] = CELL_STATES.MISSED_SHOT;
+                    }
+                });
+            });
+        },
+
         clearField() {
             if (!confirm('Вы действительно хотите очистить поле?')) return;
 
@@ -170,6 +196,41 @@ new Vue({
             return 10 - (cellNumber % 10);
         },
 
+        getNearbyCells(cellNumber) {
+            const cellsToCheck = [];
+
+            if (cellNumber > 9) {
+                cellsToCheck.push(cellNumber - 10);
+            }
+
+            if (cellNumber < 90) {
+                cellsToCheck.push(cellNumber + 10);
+            }
+
+            if (this.freeSpaceOnTheRight(cellNumber) === 10) {
+                cellsToCheck.push(cellNumber + 1, cellNumber - 9, cellNumber + 11);
+            } else if (this.freeSpaceOnTheRight(cellNumber) === 1) {
+                cellsToCheck.push(cellNumber - 1, cellNumber + 9, cellNumber - 11);
+            } else {
+                cellsToCheck.push(cellNumber - 1, cellNumber + 1, cellNumber - 9, cellNumber + 9, cellNumber - 11, cellNumber + 11);
+            }
+
+            return cellsToCheck;
+        },
+
+        getShipPositionCells(cell, array) {
+            const nearbyCells = this.getNearbyCells(cell);
+            nearbyCells.forEach(item => {
+                if (!array.some(cell => cell === item)) {
+                    const cellState = this.fields.opponents[item];
+                    if (cellState === CELL_STATES.HIT || cellState === CELL_STATES.SHIP) {
+                        array.push(item);
+                        this.getShipPositionCells(item, array);
+                    }
+                }
+            });
+        },
+
         hitCell(targetCell) {
             if (!this.isOurTurn) return;
 
@@ -183,11 +244,10 @@ new Vue({
 
             if (targetCellState === CELL_STATES.SHIP) {
                 this.fields.opponents[targetCell] = CELL_STATES.HIT;
+                this.checkAliveState(targetCell);
             } else {
                 this.fields.opponents[targetCell] = CELL_STATES.MISSED_SHOT;
             }
-
-            this.setCellsState(false, targetCell, this.fields.opponents[targetCell]);
 
             const payload = {
                 eventType: EVENT_TYPES.HIT_CELL,
@@ -204,15 +264,7 @@ new Vue({
         isPlaceAvailable() {
             let isAvailable = true;
             this.temporaryShipCells.forEach((item) => {
-                let cellsToCheck = [item - 10, item + 10];
-
-                if (this.freeSpaceOnTheRight(item) === 10) {
-                    cellsToCheck.push(item + 1, item - 9, item + 11);
-                } else if (this.freeSpaceOnTheRight(item) === 1) {
-                    cellsToCheck.push(item - 1, item + 9, item - 11);
-                } else {
-                    cellsToCheck.push(item - 1, item + 1, item - 9, item + 9, item - 11, item + 11);
-                }
+                const cellsToCheck = this.getNearbyCells(item);
 
                 cellsToCheck.forEach((cell) => {
                     if (this.fields.us[cell] === CELL_STATES.SHIP) {
