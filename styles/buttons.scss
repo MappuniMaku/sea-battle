@@ -70,12 +70,12 @@ $button-slider-control-schema: (
     background: transparent,
   ),
   active: (
-    color: $color-blue,
+    color: white,
     border: $color-blue,
-    background: white,
+    background: $color-blue,
   ),
   disabled: (
-    color: rgba(white, 0.4),
+    color: rgba($color-blue, 0.4),
     border: transparent,
     background: transparent,
   ),

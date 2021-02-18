@@ -160,7 +160,8 @@
       }
     }
 
-    &-disabled {
+    &-disabled,
+    &-disabled:focus {
       background-color: var(--swiper-arrow-disabled-background);
       color: var(--swiper-arrow-disabled-color);
       border-color: var(--swiper-arrow-disabled-border);
