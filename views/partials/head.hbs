@@ -12,4 +12,60 @@
   [v-cloak] {
     display: none;
   }
+
+  .Loader {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    color: #0d47a1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Loader__spinner {
+   width: 50px;
+   animation: 2s linear infinite loader-rotate;
+ }
+
+  .Loader__circle {
+   animation: 1.4s ease-in-out infinite both loader-animation;
+   display: block;
+   fill: transparent;
+   stroke: currentColor;
+   stroke-linecap: round;
+   stroke-dasharray: 283;
+   stroke-dashoffset: 200;
+   stroke-width: 8px;
+   transform-origin: 50% 50%;
+ }
+
+  @keyframes loader-rotate {
+    0% {
+      transform: rotateZ(0deg);
+    }
+
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
+
+  @keyframes loader-animation {
+    0%,
+    25% {
+      stroke-dashoffset: 150;
+      transform: rotate(0);
+    }
+
+    50%,
+    75% {
+      stroke-dashoffset: 75;
+      transform: rotate(45deg);
+    }
+
+    100% {
+      stroke-dashoffset: 150;
+      transform: rotate(360deg);
+    }
+  }
 </style>

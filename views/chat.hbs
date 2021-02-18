@@ -1,51 +1,55 @@
 <div class="Chat" id="chat">
-  <div class="Chat__signup" v-show="!isLoggedIn" v-cloak>
-    <form @submit="enterChat">
-      <div class="input-field">
-        <input v-model="userName" id="user-name" type="text" class="validate" required>
-        <label for="user-name">Чтобы войти в чат, введите свое имя</label>
-      </div>
+  {{> loader}}
 
-      <button type="submit" class="btn btn-small">
-        Войти
-      </button>
-    </form>
-  </div>
+  <div v-cloak>
+    <div class="Chat__signup" v-show="!isLoggedIn">
+      <form @submit="enterChat">
+        <div class="input-field">
+          <input v-model="userName" id="user-name" type="text" class="validate" required>
+          <label for="user-name">Чтобы войти в чат, введите свое имя</label>
+        </div>
 
-  <div class="Chat__main" v-show="isLoggedIn" v-cloak>
-    <div class="Chat__users">
-      <span>Пользователей в чате:</span>
-      <span v-html="usersCount"></span>
-      <span>
-        (
-          <span v-html="connectedUsersNames"></span>
-        )
-      </span>
+        <button type="submit" class="btn btn-small">
+          Войти
+        </button>
+      </form>
     </div>
 
-    <ul>
-      <li v-for="item in messages">
-        <span v-html="item.userName"></span>
-        в
-        <span v-html="item.time"></span>
-        написал(а):
-        <span v-html="item.message"></span>
-      </li>
-    </ul>
-
-    <form class="Chat__form" @submit="sendMessage">
-      <div class="input-field">
-        <input v-model="chatMessage" id="message" type="text" class="validate" required>
-        <label for="message">Введите сообщение</label>
+    <div class="Chat__main" v-show="isLoggedIn">
+      <div class="Chat__users">
+        <span>Пользователей в чате:</span>
+        <span v-html="usersCount"></span>
+        <span>
+          (
+            <span v-html="connectedUsersNames"></span>
+          )
+        </span>
       </div>
 
-      <button type="submit" class="btn btn-small">
-        Отправить
-      </button>
+      <ul>
+        <li v-for="item in messages">
+          <span v-html="item.userName"></span>
+          в
+          <span v-html="item.time"></span>
+          написал(а):
+          <span v-html="item.message"></span>
+        </li>
+      </ul>
 
-      <button type="button" class="btn btn-small" @click="exitChat">
-        Покинуть чат
-      </button>
-    </form>
+      <form class="Chat__form" @submit="sendMessage">
+        <div class="input-field">
+          <input v-model="chatMessage" id="message" type="text" class="validate" required>
+          <label for="message">Введите сообщение</label>
+        </div>
+
+        <button type="submit" class="btn btn-small">
+          Отправить
+        </button>
+
+        <button type="button" class="btn btn-small" @click="exitChat">
+          Покинуть чат
+        </button>
+      </form>
+    </div>
   </div>
 </div>

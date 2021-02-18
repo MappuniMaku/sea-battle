@@ -1,82 +1,86 @@
 <div class="SeaBattle" id="sea-battle">
-  <div class="SeaBattle__signup" v-show="!isLoggedIn" v-cloak>
-    <form @submit="signUp">
-      <div class="input-field">
-        <input v-model="nickname" id="user-name" type="text" class="validate" required>
-        <label for="user-name">Чтобы войти в игру, введите свое имя</label>
-      </div>
+  {{> loader}}
 
-      <button type="submit" class="btn btn-small">
-        Войти
-      </button>
-    </form>
-  </div>
+  <div v-cloak>
+    <div class="SeaBattle__signup" v-show="!isLoggedIn">
+      <form @submit="signUp">
+        <div class="input-field">
+          <input v-model="nickname" id="user-name" type="text" class="validate" required>
+          <label for="user-name">Чтобы войти в игру, введите свое имя</label>
+        </div>
 
-  <div class="SeaBattle__main" v-show="isLoggedIn" v-cloak>
-    <h1>Морской ♂boy♂</h1>
-
-    <div v-show="!isGameInProgress">
-      <h4 v-html="`${user.name}, здарова, ёптэ!`"></h4>
-
-      <div v-show="connectedPlayers.length > 0">
-        <h4>Список игроков:</h4>
-        <ul>
-          <li v-for="player in connectedPlayers">
-            <span v-html="player.name"></span>
-            <button type="button" class="btn btn-small" @click="startMatch(player)">
-              Сыграть
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <h4 v-show="connectedPlayers.length === 0">К сожалению, никого нет онлайн((</h4>
+        <button type="submit" class="btn btn-small">
+          Войти
+        </button>
+      </form>
     </div>
 
-    <div v-show="isGameInProgress">
-      <h4 v-html="`Начался адский замес с ${opponent.name}!`"></h4>
+    <div class="SeaBattle__main" v-show="isLoggedIn">
+      <h1>Морской ♂boy♂</h1>
 
-      <h4 v-html="status"></h4>
+      <div v-show="!isGameInProgress">
+        <h4 v-html="`${user.name}, здарова, ёптэ!`"></h4>
 
-      <div v-show="isShipPlacementInProgress">
-        <span>Выберите тип корабля:</span>
-        <select class="SeaBattle__shipTypeSelect" v-model="chosenShipType">
-          <option v-for="type in AVAILABLE_SHIP_TYPES" :value="type.value" v-html="type.label"></option>
-        </select>
+        <div v-show="connectedPlayers.length > 0">
+          <h4>Список игроков:</h4>
+          <ul>
+            <li v-for="player in connectedPlayers">
+              <span v-html="player.name"></span>
+              <button type="button" class="btn btn-small" @click="startMatch(player)">
+                Сыграть
+              </button>
+            </li>
+          </ul>
+        </div>
 
-        <button type="button" class="btn btn-small SeaBattle__clearButton" @click="clearField">
-          Очистить поле
+        <h4 v-show="connectedPlayers.length === 0">К сожалению, никого нет онлайн((</h4>
+      </div>
+
+      <div v-show="isGameInProgress">
+        <h4 v-html="`Начался адский замес с ${opponent.name}!`"></h4>
+
+        <h4 v-html="status"></h4>
+
+        <div v-show="isShipPlacementInProgress">
+          <span>Выберите тип корабля:</span>
+          <select class="SeaBattle__shipTypeSelect" v-model="chosenShipType">
+            <option v-for="type in AVAILABLE_SHIP_TYPES" :value="type.value" v-html="type.label"></option>
+          </select>
+
+          <button type="button" class="btn btn-small SeaBattle__clearButton" @click="clearField">
+            Очистить поле
+          </button>
+        </div>
+
+        <div class="SeaBattle__fieldsWrapper">
+          <ul class="SeaBattle__field">
+            <li
+                v-for="(cell, index) in fields.us"
+                class="SeaBattle__cell"
+                :class="`SeaBattle__cell--${cell}`"
+                :data-our-cell="index"
+            ></li>
+          </ul>
+
+          <ul
+              v-show="isAllShipsSet"
+              class="SeaBattle__field SeaBattle__field--opponent"
+              :class="{'SeaBattle__field--disabled' : !isOurTurn}"
+          >
+            <li
+                v-for="(cell, index) in fields.opponents"
+                class="SeaBattle__cell"
+                :class="cell === CELL_STATES.SHIP ? `SeaBattle__cell--${CELL_STATES.EMPTY}` : `SeaBattle__cell--${cell}`"
+                :data-opponent-cell="index"
+                @click="hitCell(index)"
+            ></li>
+          </ul>
+        </div>
+
+        <button type="button" class="btn btn-small SeaBattle__quitButton" @click="quitGame">
+          Выйти
         </button>
       </div>
-
-      <div class="SeaBattle__fieldsWrapper">
-        <ul class="SeaBattle__field">
-          <li
-              v-for="(cell, index) in fields.us"
-              class="SeaBattle__cell"
-              :class="`SeaBattle__cell--${cell}`"
-              :data-our-cell="index"
-          ></li>
-        </ul>
-
-        <ul
-            v-show="isAllShipsSet"
-            class="SeaBattle__field SeaBattle__field--opponent"
-            :class="{'SeaBattle__field--disabled' : !isOurTurn}"
-        >
-          <li
-              v-for="(cell, index) in fields.opponents"
-              class="SeaBattle__cell"
-              :class="cell === CELL_STATES.SHIP ? `SeaBattle__cell--${CELL_STATES.EMPTY}` : `SeaBattle__cell--${cell}`"
-              :data-opponent-cell="index"
-              @click="hitCell(index)"
-          ></li>
-        </ul>
-      </div>
-
-      <button type="button" class="btn btn-small SeaBattle__quitButton" @click="quitGame">
-        Выйти
-      </button>
     </div>
   </div>
 </div>
