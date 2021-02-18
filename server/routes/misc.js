@@ -5,7 +5,7 @@ const { Client } = require('pg');
 
 router.get('/', async (req, res) => {
     res.render('index', {
-        title: 'Мой говносервер',
+        title: 'Занятный сервер',
         isIndex: true,
     });
 });
