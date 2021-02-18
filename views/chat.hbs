@@ -1,5 +1,5 @@
 <div class="Chat" id="chat">
-  <div class="Chat__signup" v-show="!isLoggedIn">
+  <div class="Chat__signup" v-show="!isLoggedIn" v-cloak>
     <form @submit="enterChat">
       <div class="input-field">
         <input v-model="userName" id="user-name" type="text" class="validate" required>
@@ -12,7 +12,7 @@
     </form>
   </div>
 
-  <div class="Chat__main" v-show="isLoggedIn">
+  <div class="Chat__main" v-show="isLoggedIn" v-cloak>
     <div class="Chat__users">
       <span>Пользователей в чате:</span>
       <span v-html="usersCount"></span>
