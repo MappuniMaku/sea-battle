@@ -7,9 +7,9 @@ const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
 
 const initialAvailableShipNumbers = () => ({
     [GENERAL_SHIP_TYPES.ONE]: 1,
-    [GENERAL_SHIP_TYPES.TWO]: 0,
-    [GENERAL_SHIP_TYPES.THREE]: 0,
-    [GENERAL_SHIP_TYPES.FOUR]: 0,
+    [GENERAL_SHIP_TYPES.TWO]: 2,
+    [GENERAL_SHIP_TYPES.THREE]: 3,
+    [GENERAL_SHIP_TYPES.FOUR]: 4,
 });
 
 if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
