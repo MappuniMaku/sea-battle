@@ -59,4 +59,8 @@ export const STATUSES = {
     WAITING: 'Ожидаем пока противник расставит корабли...',
     OUR_TURN: 'Ваш ход',
     OPPONENTS_TURN: 'Ход противника',
-}
+};
+
+export const VUE_ELEMENTS = {
+    SEA_BATTLE: '#sea-battle',
+};

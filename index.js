@@ -10,8 +10,8 @@ const app = express();
 
 const expressWs = require('express-ws')(app);
 
-function sendWsMessageToAllClients(ws, payload = {}) {
-    expressWs.getWss().clients.forEach(client => {
+async function sendWsMessageToAllClients(ws, payload = {}) {
+    await expressWs.getWss().clients.forEach(client => {
         if (client.readyState === ws.OPEN) {
             client.send(JSON.stringify(payload));
         }
@@ -138,9 +138,10 @@ app.ws('/sea-battle', (ws, req) => {
                 game,
             };
 
-            sendWsMessageToAllClients(ws, payload);
-
-            updatePlayersList(ws);
+            sendWsMessageToAllClients(ws, payload)
+                .then(() => {
+                    updatePlayersList(ws);
+                });
         }
 
         if (parsedMessage.eventType === EVENT_TYPES.SUBMIT_SHIP_POSITIONS) {
