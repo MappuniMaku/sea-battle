@@ -28,6 +28,7 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
             opponent: {
                 name: null,
                 id: null,
+                hasLeftGame: false,
             },
             fields: {
                 us: [],
@@ -277,6 +278,12 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 return isAvailable;
             },
 
+            notifyAboutOpponentLeave() {
+                if (confirm(`${this.opponent.name} покинул игру! Выйти?`)) {
+                    this.quitGame(false);
+                }
+            },
+
             placeShip(event) {
                 if (this.chosenShipType === null) return;
                 if (event.target.dataset.ourCell === undefined) return;
@@ -309,8 +316,8 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 this.chosenShipType = null;
             },
 
-            sendMessage(payload) {
-                this.ws.send(JSON.stringify(payload));
+            async sendMessage(payload) {
+                await this.ws.send(JSON.stringify(payload));
             },
 
             sendUserData() {
@@ -397,7 +404,7 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                     }
 
                     if (parsedResponse.eventType === EVENT_TYPES.GAME_STARTED) {
-                        if (parsedResponse.game.players.some(player => player.id === this.user.id)) {
+                        if (parsedResponse.game.players.some(player => (player.id === this.user.id && !player.hasLeftGame))) {
                             this.isGameInProgress = true;
                             this.opponent = parsedResponse.game.players.find(player => player.id !== this.user.id);
                             this.setCells(parsedResponse.game);
@@ -413,6 +420,10 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                             } else if (parsedResponse.game.turn !== undefined) {
                                 this.setTurn(parsedResponse.game.turn);
                                 this.isAllShipsSet = true;
+                            }
+
+                            if (this.opponent.hasLeftGame) {
+                                this.notifyAboutOpponentLeave();
                             }
                         }
                     }
@@ -437,6 +448,12 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                             this.setWinner(parsedResponse.game.winner);
                         } else {
                             this.setTurn(parsedResponse.game.turn);
+                        }
+                    }
+
+                    if (parsedResponse.eventType === EVENT_TYPES.QUIT_GAME) {
+                        if (parsedResponse.game.players.some(player => (player.id === this.user.id && !player.hasLeftGame))) {
+                            this.notifyAboutOpponentLeave();
                         }
                     }
                 };
@@ -482,25 +499,34 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 this.sendMessage(payload);
             },
 
-            quitGame() {
-                if (!confirm('Вы действительно хотите покинуть игру?')) return;
+            quitGame(isConfirmationRequired = true) {
+                if (isConfirmationRequired && !confirm('Вы действительно хотите покинуть игру?')) return;
 
-                localStorage.setItem('seaBattle', JSON.stringify({user: this.user}));
-                this.isGameInProgress = false;
-                this.opponent.name = null;
-                this.opponent.id = null;
-                this.fields.us = [];
-                this.fields.opponents = [];
-                this.currentGameId = null;
-                this.isOurTurn = false;
-                this.chosenShipType = null;
-                this.AVAILABLE_SHIP_TYPES = SHIP_TYPES();
-                this.isShipPlacementInProgress = false;
-                this.availableShipNumbers = initialAvailableShipNumbers();
-                this.isAllShipsSet = false;
-                this.isGameOver = false;
-                this.status = STATUSES.WAITING;
-                this.sendUserData();
+                const payload = {
+                    eventType: EVENT_TYPES.QUIT_GAME,
+                    gameId: this.currentGameId,
+                    userId: this.user.id,
+                };
+
+                this.sendMessage(payload)
+                    .then(() => {
+                        localStorage.setItem('seaBattle', JSON.stringify({user: this.user}));
+                        this.isGameInProgress = false;
+                        this.opponent.name = null;
+                        this.opponent.id = null;
+                        this.fields.us = [];
+                        this.fields.opponents = [];
+                        this.currentGameId = null;
+                        this.isOurTurn = false;
+                        this.chosenShipType = null;
+                        this.AVAILABLE_SHIP_TYPES = SHIP_TYPES();
+                        this.isShipPlacementInProgress = false;
+                        this.availableShipNumbers = initialAvailableShipNumbers();
+                        this.isAllShipsSet = false;
+                        this.isGameOver = false;
+                        this.status = STATUSES.WAITING;
+                        this.sendUserData();
+                    });
             },
         },
         watch: {

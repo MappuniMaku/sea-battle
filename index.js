@@ -78,6 +78,7 @@ const EVENT_TYPES = {
     GAME_STARTED: 'gameStarted',
     SUBMIT_SHIP_POSITIONS: 'submitShipPositions',
     HIT_CELL: 'hitCell',
+    QUIT_GAME: 'quitGame',
 };
 
 const CELL_STATES = {
@@ -129,9 +130,12 @@ app.ws('/sea-battle', (ws, req) => {
         }
 
         if (parsedMessage.eventType === EVENT_TYPES.START_MATCH_REQUEST) {
+            const players = parsedMessage.players;
+            players.forEach(player => player.hasLeftGame = false);
+
             const game = {
                 id: Date.now().toString(),
-                players: parsedMessage.players,
+                players,
             };
 
             games[game.id] = game;
@@ -180,6 +184,18 @@ app.ws('/sea-battle', (ws, req) => {
             const payload = {
                 eventType: EVENT_TYPES.HIT_CELL,
                 game,
+            };
+
+            sendWsMessageToAllClients(ws, payload);
+        }
+
+        if (parsedMessage.eventType === EVENT_TYPES.QUIT_GAME) {
+            const user = games[parsedMessage.gameId].players.find(player => player.id === parsedMessage.userId);
+            user.hasLeftGame = true;
+
+            const payload = {
+                eventType: EVENT_TYPES.QUIT_GAME,
+                game: games[parsedMessage.gameId],
             };
 
             sendWsMessageToAllClients(ws, payload);

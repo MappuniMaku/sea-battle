@@ -6,6 +6,7 @@ export const EVENT_TYPES = {
     GAME_STARTED: 'gameStarted',
     SUBMIT_SHIP_POSITIONS: 'submitShipPositions',
     HIT_CELL: 'hitCell',
+    QUIT_GAME: 'quitGame',
 };
 
 export const CELL_STATES = {
