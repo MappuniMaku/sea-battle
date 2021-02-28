@@ -10,8 +10,16 @@ const app = express();
 
 const expressWs = require('express-ws')(app);
 
-async function sendWsMessageToAllClients(ws, payload = {}) {
-    await expressWs.getWss().clients.forEach(client => {
+// async function sendWsMessageToAllClients(ws, payload = {}) {
+//     await expressWs.getWss().clients.forEach(client => {
+//         if (client.readyState === ws.OPEN) {
+//             client.send(JSON.stringify(payload));
+//         }
+//     });
+// }
+
+function sendWsMessageToAllClients(ws, payload = {}) {
+    expressWs.getWss().clients.forEach(client => {
         if (client.readyState === ws.OPEN) {
             client.send(JSON.stringify(payload));
         }
