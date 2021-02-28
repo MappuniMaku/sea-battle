@@ -121,7 +121,10 @@ app.ws('/sea-battle', (ws, req) => {
                     game: currentGame,
                 };
 
-                sendWsMessageToAllClients(ws, payload);
+                sendWsMessageToAllClients(ws, payload)
+                    .then(() => {
+                        updatePlayersList(ws);
+                    });
             }
         }
 

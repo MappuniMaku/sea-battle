@@ -1,5 +1,5 @@
-import Vue from 'vue/dist/vue.min';
-// import Vue from 'vue/dist/vue';
+// import Vue from 'vue/dist/vue.min';
+import Vue from 'vue/dist/vue';
 import {EVENT_TYPES, CELL_STATES, SHIP_TYPES, GENERAL_SHIP_TYPES, STATUSES, VUE_ELEMENTS} from './constants';
 
 const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
@@ -100,7 +100,7 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
             },
 
             displayPossibleShipPosition(event) {
-                if (this.chosenShipType === null) return;
+                if (this.chosenShipType === null || this.chosenShipType === undefined) return;
 
                 let targetCellNumber = event.target.dataset.ourCell;
 
@@ -319,7 +319,7 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                     user: this.user,
                 };
 
-                if (this.currentGameId !== undefined) {
+                if (this.currentGameId !== null) {
                     payload.gameId = this.currentGameId;
                 }
 
