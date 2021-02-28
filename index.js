@@ -105,7 +105,9 @@ app.ws('/sea-battle', (ws, req) => {
         const parsedMessage = JSON.parse(msg);
 
         if (parsedMessage.eventType === EVENT_TYPES.LOBBY_ENTER) {
-            connectedPlayers.push(parsedMessage.user);
+            if (!connectedPlayers.some(player => player.id === parsedMessage.user.id)) {
+                connectedPlayers.push(parsedMessage.user);
+            }
 
             let payload = {
                 eventType: EVENT_TYPES.UPDATE_LOBBY_PLAYERS,
