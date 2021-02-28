@@ -6,10 +6,10 @@ const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
 // const wsAddress = 'ws://localhost:3000/sea-battle';
 
 const initialAvailableShipNumbers = () => ({
-    [GENERAL_SHIP_TYPES.ONE]: 1,
-    [GENERAL_SHIP_TYPES.TWO]: 2,
-    [GENERAL_SHIP_TYPES.THREE]: 3,
-    [GENERAL_SHIP_TYPES.FOUR]: 4,
+    [GENERAL_SHIP_TYPES.ONE]: 4,
+    [GENERAL_SHIP_TYPES.TWO]: 3,
+    [GENERAL_SHIP_TYPES.THREE]: 2,
+    [GENERAL_SHIP_TYPES.FOUR]: 1,
 });
 
 if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
