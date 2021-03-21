@@ -190,8 +190,6 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 };
 
                 this.ws.onclose = () => {
-                    console.log('Соединение закрыто, пытаемся переподключиться...');
-
                     this.enterLobby();
                 };
             },
@@ -326,8 +324,6 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 if (this.ws.readyState === 1) {
                     await this.ws.send(JSON.stringify(payload));
                 } else {
-                    console.log('Ожидаем переподключения, состояние:', this.ws.readyState);
-                    console.log(this.ws);
                     setTimeout(() => {
                         this.sendMessage(payload);
                     }, 1000);

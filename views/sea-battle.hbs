@@ -23,8 +23,8 @@
 
         <div v-show="connectedPlayers.length > 0">
           <h4>Список игроков:</h4>
-          <ul>
-            <li v-for="player in connectedPlayers">
+          <ul class="SeaBattle__playersList">
+            <li v-for="player in connectedPlayers" class="SeaBattle__playersListItem">
               <span v-html="player.name"></span>
               <button type="button" class="btn btn-small" @click="startMatch(player)">
                 Сыграть
