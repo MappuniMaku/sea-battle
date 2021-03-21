@@ -58,6 +58,7 @@ app.ws('/chat', (ws, req) => {
     });
 
     ws.on('close', () => {
+        console.log('user disconnected');
         usersCount--;
         connectedUsers = [];
 

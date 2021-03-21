@@ -1,5 +1,5 @@
-// import Vue from 'vue/dist/vue.min';
-import Vue from 'vue/dist/vue';
+import Vue from 'vue/dist/vue.min';
+// import Vue from 'vue/dist/vue';
 import {EVENT_TYPES, CELL_STATES, SHIP_TYPES, GENERAL_SHIP_TYPES, STATUSES, VUE_ELEMENTS} from './constants';
 
 const wsAddress = 'wss://slider-constructor.herokuapp.com/sea-battle';
@@ -188,6 +188,15 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
 
                     this.sendUserData();
                 };
+
+                this.ws.onclose = () => {
+                    console.log('Соединение закрыто, пытаемся переподключиться...');
+
+                    this.ws = new WebSocket(wsAddress);
+                    this.ws.onopen = () => {
+                        this.setWsEventsHandlers();
+                    };
+                };
             },
 
             freeSpaceBottom(cellNumber) {
@@ -317,7 +326,14 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
             },
 
             async sendMessage(payload) {
-                await this.ws.send(JSON.stringify(payload));
+                if (this.ws.readyState === 1) {
+                    await this.ws.send(JSON.stringify(payload));
+                } else {
+                    console.log('Ожидаем переподключения...');
+                    setTimeout(() => {
+                        this.sendMessage(payload);
+                    }, 500);
+                }
             },
 
             sendUserData() {
