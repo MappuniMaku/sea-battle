@@ -1,6 +1,10 @@
 .SeaBattle {
   $block: &;
 
+  &__playersList {
+    margin-top: 24px;
+  }
+
   &__playersListItem {
     &:not(:last-child) {
       margin-bottom: 16px;
