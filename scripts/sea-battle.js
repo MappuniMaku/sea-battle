@@ -293,7 +293,7 @@ if (document.querySelector(VUE_ELEMENTS.SEA_BATTLE) !== null) {
                 if (event.target.dataset.ourCell === undefined) return;
 
                 if (!this.isPlaceAvailable()) {
-                    alert('Корабли нельзя ставить рядом друг с другом');
+                    alert('Корабли нельзя ставить рядом друг с другом!');
                     return;
                 }
 

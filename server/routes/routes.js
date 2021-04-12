@@ -157,7 +157,7 @@ router.get('/chat', (req, res) => {
 
 router.get('/sea-battle', (req, res) => {
     res.render('sea-battle', {
-        title: 'Морской boy',
+        title: 'Морской бой',
         isSeaBattle: true,
     });
 });
