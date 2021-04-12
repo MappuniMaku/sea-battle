@@ -19,7 +19,7 @@ export const CELL_STATES = {
 
 export const SHIP_TYPES = () => ({
     ONE: {
-        label: 'Вонючий однопалубник',
+        label: 'Однопалубник',
         value: 'one',
     },
     TWO_HORIZONTAL: {

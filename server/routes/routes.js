@@ -141,13 +141,6 @@ router.post('/complete', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/slider', (req, res) => {
-    res.render('slider', {
-        title: 'Слайдер',
-        isSlider: true,
-    });
-});
-
 router.get('/chat', (req, res) => {
     res.render('chat', {
         title: 'Чатик',
